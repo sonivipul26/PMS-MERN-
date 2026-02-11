@@ -1,0 +1,126 @@
+.projects {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.projects h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.025em;
+}
+
+.projects table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+}
+
+.projects th,
+.projects td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  transition: background-color 0.2s ease;
+}
+
+.projects th {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #1d4ed8;
+}
+
+.projects th:first-child {
+  border-top-left-radius: 12px;
+}
+
+.projects th:last-child {
+  border-top-right-radius: 12px;
+}
+
+.projects td {
+  color: #374151;
+  font-size: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.projects tbody tr {
+  transition: all 0.2s ease;
+}
+
+.projects tbody tr:hover {
+  background-color: #f9fafb;
+  transform: scale(1.01);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.projects tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.projects td:first-child {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.projects td:last-child {
+  font-weight: 500;
+  position: relative;
+}
+
+/* Status badges */
+.projects td:last-child::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.projects tbody tr:nth-child(1) td:last-child::before {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+}
+
+.projects tbody tr:nth-child(2) td:last-child::before {
+  background-color: #10b981;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.projects tbody tr:nth-child(3) td:last-child::before {
+  background-color: #6b7280;
+  box-shadow: 0 0 8px rgba(107, 114, 128, 0.5);
+}
+
+@media (max-width: 768px) {
+  .projects {
+    padding: 1.5rem;
+    overflow-x: auto;
+  }
+
+  .projects h2 {
+    font-size: 1.75rem;
+  }
+
+  .projects table {
+    min-width: 500px;
+  }
+
+  .projects th,
+  .projects td {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+}

@@ -1,0 +1,187 @@
+.teams {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.teams h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.025em;
+}
+
+.teams ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.teams li {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  padding: 1.75rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.teams li::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.teams li:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  border-color: #3b82f6;
+}
+
+.teams li:hover::before {
+  transform: scaleX(1);
+}
+
+/* Avatar circle */
+.teams li::after {
+  content: attr(data-initial);
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.teams li:nth-child(1)::after {
+  content: 'A';
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.teams li:nth-child(2)::after {
+  content: 'R';
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.teams li:nth-child(3)::after {
+  content: 'K';
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.teams li:hover::after {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.teams li strong {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  padding-right: 60px;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.teams li {
+  color: #6b7280;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding-right: 60px;
+}
+
+/* Role badge */
+.teams li > *:last-child {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.375rem 0.875rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #93c5fd;
+  border-radius: 20px;
+  color: #1e40af;
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: fit-content;
+  letter-spacing: 0.025em;
+}
+
+.teams li:nth-child(2) > *:last-child {
+  background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+  border-color: #c084fc;
+  color: #6b21a8;
+}
+
+.teams li:nth-child(3) > *:last-child {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+  border-color: #f9a8d4;
+  color: #9f1239;
+}
+
+/* Subtle pattern overlay */
+.teams li:before {
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+}
+
+.teams li:nth-child(1):before {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.teams li:nth-child(2):before {
+  background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.teams li:nth-child(3):before {
+  background: linear-gradient(90deg, #ec4899 0%, #db2777 100%);
+}
+
+@media (max-width: 768px) {
+  .teams {
+    padding: 1.5rem;
+  }
+
+  .teams h2 {
+    font-size: 1.75rem;
+  }
+
+  .teams ul {
+    grid-template-columns: 1fr;
+  }
+
+  .teams li {
+    padding: 1.5rem 1.75rem;
+  }
+
+  .teams li::after {
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+    right: 1.25rem;
+  }
+
+  .teams li strong {
+    font-size: 1.1rem;
+    padding-right: 50px;
+  }
+}

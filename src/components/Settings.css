@@ -1,0 +1,248 @@
+.settings {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.settings h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.025em;
+}
+
+.settings p {
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  font-size: 1.05rem;
+  color: #374151;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.settings p::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.settings p:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #3b82f6;
+}
+
+.settings p:hover::before {
+  opacity: 1;
+}
+
+/* Unique color for each setting */
+.settings p:nth-child(2) {
+  border-left: 4px solid transparent;
+}
+
+.settings p:nth-child(2):hover {
+  border-left-color: #3b82f6;
+}
+
+.settings p:nth-child(2)::after {
+  content: '🔔';
+  position: absolute;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.15;
+}
+
+.settings p:nth-child(3) {
+  border-left: 4px solid transparent;
+}
+
+.settings p:nth-child(3):hover {
+  border-left-color: #8b5cf6;
+}
+
+.settings p:nth-child(3)::after {
+  content: '🔒';
+  position: absolute;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.15;
+}
+
+.settings p:nth-child(4) {
+  border-left: 4px solid transparent;
+}
+
+.settings p:nth-child(4):hover {
+  border-left-color: #ec4899;
+}
+
+.settings p:nth-child(4)::after {
+  content: '🎨';
+  position: absolute;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.15;
+}
+
+.settings p:nth-child(5) {
+  border-left: 4px solid transparent;
+}
+
+.settings p:nth-child(5):hover {
+  border-left-color: #f59e0b;
+}
+
+.settings p:nth-child(5)::after {
+  content: '🔑';
+  position: absolute;
+  right: 2rem;
+  font-size: 2rem;
+  opacity: 0.15;
+}
+
+/* Icon styling for checkmark */
+.settings p::first-line {
+  font-size: 1.25rem;
+}
+
+/* Arrow indicator on hover */
+.settings p::after {
+  transition: all 0.3s ease;
+}
+
+.settings p:hover::after {
+  opacity: 0.3;
+  transform: translateX(-8px);
+}
+
+/* Add chevron arrow */
+.settings p {
+  padding-right: 4rem;
+}
+
+.settings p:before {
+  content: '›';
+  position: absolute;
+  right: 1.5rem;
+  font-size: 1.75rem;
+  color: #9ca3af;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.settings p:hover:before {
+  opacity: 1;
+  transform: translateX(0);
+  color: #3b82f6;
+}
+
+/* Override before for border animation */
+.settings p {
+  padding-left: 2rem;
+}
+
+.settings p::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Re-add chevron with different approach */
+.settings p > span {
+  position: absolute;
+  right: 1.5rem;
+  font-size: 1.75rem;
+  color: #9ca3af;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.settings p:hover > span {
+  opacity: 1;
+  transform: translateX(0);
+  color: #3b82f6;
+}
+
+/* Simpler approach - add arrow via pseudo */
+.settings p {
+  position: relative;
+}
+
+.settings p:after {
+  position: absolute;
+  right: 1.5rem;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-style: normal;
+  font-size: 1.5rem;
+  color: #9ca3af;
+}
+
+.settings p:nth-child(2):after {
+  content: '→';
+}
+
+.settings p:nth-child(3):after {
+  content: '→';
+}
+
+.settings p:nth-child(4):after {
+  content: '→';
+}
+
+.settings p:nth-child(5):after {
+  content: '→';
+}
+
+.settings p:hover:after {
+  opacity: 1;
+  color: #3b82f6;
+  right: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .settings {
+    padding: 1.5rem;
+  }
+
+  .settings h2 {
+    font-size: 1.75rem;
+  }
+
+  .settings p {
+    padding: 1.25rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .settings p:hover {
+    transform: translateX(4px);
+  }
+}

@@ -1,0 +1,327 @@
+.tasks {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.tasks h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  letter-spacing: -0.025em;
+}
+
+/* Filter buttons */
+.task-filters {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.task-filters button {
+  padding: 0.625rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  color: #6b7280;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.task-filters button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.task-filters button:hover::before {
+  width: 200px;
+  height: 200px;
+}
+
+.task-filters button:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.task-filters button.active {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  border-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.task-filters button.active:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+}
+
+.task-filters button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
+}
+
+/* Add icons to filter buttons */
+.task-filters button:nth-child(1)::after {
+  content: ' 📋';
+  font-size: 1rem;
+}
+
+.task-filters button:nth-child(2)::after {
+  content: ' ✅';
+  font-size: 1rem;
+}
+
+.task-filters button:nth-child(3)::after {
+  content: ' ⏳';
+  font-size: 1rem;
+}
+
+.tasks ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.tasks li {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  transition: all 0.3s ease;
+  font-size: 1.05rem;
+  color: #374151;
+  position: relative;
+  overflow: hidden;
+}
+
+.tasks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.tasks li:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  border-color: #3b82f6;
+}
+
+.tasks li:hover::before {
+  transform: scaleY(1);
+}
+
+/* Completed tasks styling */
+.tasks li.done {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+  color: #065f46;
+}
+
+.tasks li.done::before {
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+}
+
+.tasks li.done:hover {
+  border-color: #10b981;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
+}
+
+.tasks li.done::after {
+  content: '✓';
+  position: absolute;
+  right: 4rem;
+  font-size: 3rem;
+  color: #10b981;
+  opacity: 0.1;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+.tasks li.done span {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* Pending tasks styling */
+.tasks li:not(.done) {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.tasks li:not(.done)::before {
+  background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+}
+
+.tasks li:not(.done):hover {
+  border-color: #f59e0b;
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.15);
+}
+
+.tasks li:not(.done)::after {
+  content: '○';
+  position: absolute;
+  right: 4rem;
+  font-size: 3rem;
+  color: #f59e0b;
+  opacity: 0.1;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* Task content */
+.tasks li span {
+  flex: 1;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  padding-right: 1rem;
+}
+
+.tasks li span:hover {
+  color: #1f2937;
+}
+
+/* Delete button */
+.tasks li button {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border: 2px solid #fca5a5;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.tasks li button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s, height 0.4s;
+}
+
+.tasks li button:hover::before {
+  width: 100px;
+  height: 100px;
+}
+
+.tasks li button:hover {
+  background: linear-gradient(135deg, #fca5a5 0%, #f87171 100%);
+  border-color: #ef4444;
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.tasks li button:active {
+  transform: scale(0.95) rotate(0deg);
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
+}
+
+/* Empty state message */
+.tasks p.empty,
+.tasks p {
+  text-align: center;
+  font-size: 1.25rem;
+  color: #6b7280;
+  padding: 3rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
+  border-radius: 12px;
+  border: 2px dashed #d1d5db;
+  margin: 2rem auto;
+  max-width: 500px;
+}
+
+@media (max-width: 768px) {
+  .tasks {
+    padding: 1.5rem;
+  }
+
+  .tasks h2 {
+    font-size: 1.75rem;
+  }
+
+  .task-filters {
+    gap: 0.5rem;
+  }
+
+  .task-filters button {
+    padding: 0.5rem 1.125rem;
+    font-size: 0.875rem;
+  }
+
+  .tasks li {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .tasks li:hover {
+    transform: translateX(4px);
+  }
+
+  .tasks li::after {
+    font-size: 2rem;
+    right: 3rem;
+  }
+
+  .tasks li button {
+    min-width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .tasks li span {
+    font-size: 0.95rem;
+  }
+
+  .tasks p,
+  .tasks p.empty {
+    font-size: 1.125rem;
+    padding: 2rem;
+  }
+}
