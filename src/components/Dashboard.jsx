@@ -1,17 +1,39 @@
+import { useOutletContext } from 'react-router-dom'
 import './Dashboard.css'
 
 function Dashboard() {
+  const { tasks } = useOutletContext()
+
+  const total = tasks.length
+  const completed = tasks.filter(task => task.completed).length
+  const pending = tasks.filter(task => !task.completed).length
+  const completionRate = total === 0 ? 0 : Math.round((completed / total) * 100)
+
   return (
     <div className="dashboard">
       <h2>Dashboard Overview</h2>
-      <p>Here is a quick summary of your work.</p>
 
-      <ul>
-        <li>Total Projects: <strong>8</strong></li>
-        <li>Total Tasks: <strong>24</strong></li>
-        <li>Completed Tasks: <strong>16</strong></li>
-        <li>Pending Tasks: <strong>8</strong></li>
-      </ul>
+      <div className="stats-grid">
+        <div className="stat-card">
+          <h3>{total}</h3>
+          <p>Total Tasks</p>
+        </div>
+
+        <div className="stat-card completed">
+          <h3>{completed}</h3>
+          <p>Completed</p>
+        </div>
+
+        <div className="stat-card pending">
+          <h3>{pending}</h3>
+          <p>Pending</p>
+        </div>
+
+        <div className="stat-card rate">
+          <h3>{completionRate}%</h3>
+          <p>Completion Rate</p>
+        </div>
+      </div>
     </div>
   )
 }

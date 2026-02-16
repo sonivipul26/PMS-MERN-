@@ -4,16 +4,28 @@ import './Tasks.css'
 
 function Tasks() {
   const { tasks, toggleTask, deleteTask } = useOutletContext()
+
   const [filter, setFilter] = useState('all')
+  const [search, setSearch] = useState('')
 
   function getFilteredTasks() {
+    let filtered = tasks
+
     if (filter === 'completed') {
-      return tasks.filter(task => task.completed)
+      filtered = filtered.filter(task => task.completed)
     }
+
     if (filter === 'pending') {
-      return tasks.filter(task => !task.completed)
+      filtered = filtered.filter(task => !task.completed)
     }
-    return tasks
+
+    if (search.trim() !== '') {
+      filtered = filtered.filter(task =>
+        task.title.toLowerCase().includes(search.toLowerCase())
+      )
+    }
+
+    return filtered
   }
 
   const filteredTasks = getFilteredTasks()
@@ -22,7 +34,14 @@ function Tasks() {
     <div className="tasks">
       <h2>Tasks</h2>
 
-      
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        className="search-input"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
       <div className="task-filters">
         <button
           className={filter === 'all' ? 'active' : ''}
@@ -52,9 +71,17 @@ function Tasks() {
         <ul>
           {filteredTasks.map(task => (
             <li key={task.id} className={task.completed ? 'done' : ''}>
-              <span onClick={() => toggleTask(task.id)}>
-                {task.completed ? '✅' : '⬜'} {task.title}
-              </span>
+              <div>
+                <span onClick={() => toggleTask(task.id)}>
+                  {task.completed ? '✅' : '⬜'} {task.title}
+                </span>
+
+                {task.assignedTo && (
+                  <p className="assigned">
+                    Assigned to: {task.assignedTo}
+                  </p>
+                )}
+              </div>
 
               <button onClick={() => deleteTask(task.id)}>❌</button>
             </li>

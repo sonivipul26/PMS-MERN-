@@ -4,7 +4,7 @@ import './Sidebar.css'
 function Sidebar() {
   return (
     <div className="sidebar">
-      <h2 className="logo">TaskFlow</h2>
+      <h2 className="logo">Dreadline</h2>
 
       <ul>
         <li>

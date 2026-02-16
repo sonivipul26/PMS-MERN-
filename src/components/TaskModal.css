@@ -11,21 +11,17 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .modal {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  padding: 2rem;
+  padding: 2.5rem 2rem 2rem;
   width: 90%;
   max-width: 480px;
   border-radius: 16px;
-  box-shadow: 
+  box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   position: relative;
@@ -56,12 +52,8 @@
 }
 
 @keyframes bounce {
-  0%, 100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(-10px);
-  }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-10px); }
 }
 
 .modal h3 {
@@ -87,8 +79,10 @@
   border-radius: 2px;
 }
 
+/* Shared input/textarea/select styles */
 .modal input,
-.modal textarea {
+.modal textarea,
+.modal select {
   width: 100%;
   padding: 0.875rem 1.125rem;
   margin: 0 0 1.25rem 0;
@@ -96,6 +90,7 @@
   border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
+  font-weight: 500;
   transition: all 0.3s ease;
   box-sizing: border-box;
   background: #ffffff;
@@ -103,7 +98,8 @@
 }
 
 .modal input:focus,
-.modal textarea:focus {
+.modal textarea:focus,
+.modal select:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
@@ -116,13 +112,7 @@
   font-weight: 400;
 }
 
-.modal textarea {
-  min-height: 120px;
-  resize: vertical;
-  font-family: inherit;
-}
-
-/* Add icons to inputs */
+/* Title input icon */
 .modal input[type="text"] {
   padding-left: 2.75rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='8' y1='6' x2='21' y2='6'%3E%3C/line%3E%3Cline x1='8' y1='12' x2='21' y2='12'%3E%3C/line%3E%3Cline x1='8' y1='18' x2='21' y2='18'%3E%3C/line%3E%3Cline x1='3' y1='6' x2='3.01' y2='6'%3E%3C/line%3E%3Cline x1='3' y1='12' x2='3.01' y2='12'%3E%3C/line%3E%3Cline x1='3' y1='18' x2='3.01' y2='18'%3E%3C/line%3E%3C/svg%3E");
@@ -131,7 +121,10 @@
   background-size: 20px;
 }
 
+/* Textarea icon */
 .modal textarea {
+  min-height: 120px;
+  resize: vertical;
   padding-left: 2.75rem;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='9 11 12 14 22 4'%3E%3C/polyline%3E%3Cpath d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11'%3E%3C/path%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -139,6 +132,43 @@
   background-size: 20px;
 }
 
+/* Assign member dropdown */
+.modal select {
+  padding-left: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='12' cy='7' r='4'%3E%3C/circle%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 1rem center;
+  background-size: 20px;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+
+  /* Custom chevron on right */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='12' cy='7' r='4'%3E%3C/circle%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 1rem center, calc(100% - 1rem) center;
+  background-size: 20px, 16px;
+  padding-right: 2.75rem;
+}
+
+.modal select:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+}
+
+.modal select option {
+  font-weight: 500;
+  color: #1f2937;
+  padding: 0.5rem;
+}
+
+.modal select option:first-child {
+  color: #9ca3af;
+}
+
+/* Modal actions */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
@@ -211,7 +241,6 @@
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* Add icons to buttons */
 .cancel-btn::after {
   content: ' ✕';
   font-size: 1rem;
@@ -224,15 +253,10 @@
   margin-left: 0.25rem;
 }
 
-/* Close button in top right */
-.modal {
-  padding-top: 2.5rem;
-}
-
-/* Responsive design */
+/* Responsive */
 @media (max-width: 480px) {
   .modal {
-    padding: 2rem 1.5rem;
+    padding: 2rem 1.5rem 1.5rem;
     width: 95%;
     margin: 1rem;
   }
@@ -248,13 +272,15 @@
   }
 
   .modal input,
-  .modal textarea {
+  .modal textarea,
+  .modal select {
     padding: 0.75rem 1rem;
     font-size: 0.9375rem;
   }
 
   .modal input[type="text"],
-  .modal textarea {
+  .modal textarea,
+  .modal select {
     padding-left: 2.5rem;
     background-size: 18px;
     background-position: 0.875rem center;
@@ -263,6 +289,12 @@
   .modal textarea {
     background-position: 0.875rem 0.875rem;
     min-height: 100px;
+  }
+
+  .modal select {
+    background-size: 18px, 14px;
+    background-position: 0.875rem center, calc(100% - 0.875rem) center;
+    padding-right: 2.25rem;
   }
 
   .modal-actions {

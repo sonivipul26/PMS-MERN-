@@ -33,7 +33,7 @@
 }
 
 .logo::before {
-  content: '⚡';
+  content: '💀';
   position: absolute;
   left: 0;
   font-size: 2rem;

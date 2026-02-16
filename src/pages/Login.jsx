@@ -19,7 +19,7 @@ function Login() {
   return (
     <div className="login-container">
       <form className="login-box" onSubmit={handleLogin}>
-        <h2>Login to TaskFlow</h2>
+        <h2>Login to Dreadline</h2>
 
         <input
           type="email"

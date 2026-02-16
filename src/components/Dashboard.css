@@ -12,63 +12,204 @@
   letter-spacing: -0.025em;
 }
 
-.dashboard p {
-  color: #6b7280;
-  margin-bottom: 2rem;
-  font-size: 1.05rem;
-  line-height: 1.6;
-}
-
-.dashboard ul {
-  list-style: none;
-  padding: 0;
+/* Stats grid */
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.25rem;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
 }
 
-.dashboard li {
-  padding: 1.5rem 1.75rem;
+/* Base stat card */
+.stat-card {
+  padding: 2rem 1.75rem;
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e5e7eb;
   transition: all 0.3s ease;
-  font-size: 1rem;
-  color: #374151;
   position: relative;
   overflow: hidden;
+  cursor: default;
 }
 
-.dashboard li::before {
+.stat-card::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
 }
 
-.dashboard li:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.06);
+  transition: all 0.4s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
   border-color: #3b82f6;
 }
 
-.dashboard li:hover::before {
-  opacity: 1;
+.stat-card:hover::before {
+  transform: scaleX(1);
 }
 
-.dashboard li strong {
-  float: right;
-  font-size: 1.5rem;
-  font-weight: 700;
+.stat-card:hover::after {
+  transform: scale(1.4);
+}
+
+.stat-card h3 {
+  font-size: 3rem;
+  font-weight: 800;
   color: #3b82f6;
-  margin-left: 1rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1;
+  letter-spacing: -0.025em;
+  transition: all 0.3s ease;
+}
+
+.stat-card p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Completed card */
+.stat-card.completed {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+}
+
+.stat-card.completed::before {
+  background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+}
+
+.stat-card.completed::after {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.stat-card.completed:hover {
+  border-color: #10b981;
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.2);
+}
+
+.stat-card.completed h3 {
+  color: #059669;
+}
+
+.stat-card.completed p {
+  color: #065f46;
+}
+
+/* Pending card */
+.stat-card.pending {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+}
+
+.stat-card.pending::before {
+  background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+}
+
+.stat-card.pending::after {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.stat-card.pending:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.2);
+}
+
+.stat-card.pending h3 {
+  color: #d97706;
+}
+
+.stat-card.pending p {
+  color: #92400e;
+}
+
+/* Rate card */
+.stat-card.rate {
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  border-color: #c4b5fd;
+}
+
+.stat-card.rate::before {
+  background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+}
+
+.stat-card.rate::after {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+.stat-card.rate:hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 12px 28px rgba(139, 92, 246, 0.2);
+}
+
+.stat-card.rate h3 {
+  color: #7c3aed;
+}
+
+.stat-card.rate p {
+  color: #4c1d95;
+}
+
+/* Icon watermarks */
+.stat-card:not(.completed):not(.pending):not(.rate)::after {
+  content: '';
+}
+
+.stat-card h3::after {
+  display: block;
+  font-size: 2.5rem;
+  margin-top: 0.5rem;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+.stat-card:not(.completed):not(.pending):not(.rate) h3::after {
+  content: '📋';
+}
+
+.stat-card.completed h3::after {
+  content: '✅';
+}
+
+.stat-card.pending h3::after {
+  content: '⏳';
+}
+
+.stat-card.rate h3::after {
+  content: '📊';
+}
+
+/* Hover number color shift */
+.stat-card:hover h3 {
+  transform: scale(1.05);
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -80,7 +221,30 @@
     font-size: 1.75rem;
   }
 
-  .dashboard ul {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .stat-card h3 {
+    font-size: 2.25rem;
+  }
+
+  .stat-card h3::after {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stat-card h3 {
+    font-size: 2.5rem;
   }
 }

@@ -23,7 +23,7 @@
 }
 
 .navbar h3::before {
-
+  content: '📊';
   position: absolute;
   left: 0;
   font-size: 1.75rem;
@@ -31,20 +31,46 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
 }
 
-.navbar div {
+/* Nav actions wrapper */
+.nav-actions {
   display: flex;
-  gap: 0.75rem;
   align-items: center;
+  gap: 0.875rem;
 }
 
+/* Profile greeting */
+.profile-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 24px;
+  padding: 0.5rem 1.125rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.1);
+}
+
+.profile-name::before {
+  content: '👋';
+  font-size: 1rem;
+}
+
+.profile-name:hover {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+  box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Shared button styles */
 .navbar button {
   padding: 0.625rem 1.5rem;
   border: none;
@@ -76,27 +102,42 @@
   height: 300px;
 }
 
-.navbar button:first-child {
+/* Create Task button */
+.create-btn {
   background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
   color: white;
   border: 2px solid transparent;
 }
 
-.navbar button:first-child:hover {
+.create-btn::after {
+  content: ' +';
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-left: 0.25rem;
+}
+
+.create-btn:hover {
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
 }
 
-.navbar button:first-child:active {
+.create-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
+/* Logout button */
 .logout-btn {
   background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
   color: white;
   border: 2px solid transparent;
+}
+
+.logout-btn::after {
+  content: ' ⎋';
+  font-size: 1.1rem;
+  margin-left: 0.25rem;
 }
 
 .logout-btn:hover {
@@ -110,21 +151,7 @@
   box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
-/* Add icon to buttons */
-.navbar button:first-child::after {
-  content: ' +';
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-left: 0.25rem;
-}
-
-.logout-btn::after {
-  content: ' ⎋';
-  font-size: 1.1rem;
-  margin-left: 0.25rem;
-}
-
-/* Responsive design */
+/* Responsive */
 @media (max-width: 768px) {
   .navbar {
     padding: 0 1rem;
@@ -140,13 +167,24 @@
     font-size: 1.5rem;
   }
 
+  .nav-actions {
+    gap: 0.5rem;
+  }
+
+  .profile-name {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.875rem;
+  }
+
   .navbar button {
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
   }
+}
 
-  .navbar div {
-    gap: 0.5rem;
+@media (max-width: 600px) {
+  .profile-name {
+    display: none;
   }
 }
 
@@ -160,7 +198,7 @@
     font-size: 0.8rem;
   }
 
-  .navbar button:first-child::after,
+  .create-btn::after,
   .logout-btn::after {
     display: none;
   }

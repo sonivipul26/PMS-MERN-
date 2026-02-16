@@ -12,26 +12,25 @@
   letter-spacing: -0.025em;
 }
 
-.settings p {
+/* Setting cards */
+.setting-card {
   background: linear-gradient(135deg, #ffffff 0%, #f9fafb 100%);
-  padding: 1.5rem 2rem;
-  margin-bottom: 1rem;
-  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  margin-bottom: 1.25rem;
+  border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e5e7eb;
-  font-size: 1.05rem;
-  color: #374151;
-  font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
-  gap: 1rem;
-  cursor: pointer;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.settings p::before {
+.setting-card::before {
   content: '';
   position: absolute;
   left: 0;
@@ -39,195 +38,227 @@
   width: 4px;
   height: 100%;
   background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
 }
 
-.settings p:hover {
-  transform: translateX(8px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.setting-card:hover {
+  transform: translateX(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   border-color: #3b82f6;
 }
 
-.settings p:hover::before {
-  opacity: 1;
+.setting-card:hover::before {
+  transform: scaleY(1);
 }
 
-/* Unique color for each setting */
-.settings p:nth-child(2) {
-  border-left: 4px solid transparent;
-}
-
-.settings p:nth-child(2):hover {
-  border-left-color: #3b82f6;
-}
-
-.settings p:nth-child(2)::after {
-  content: '🔔';
+/* Card icons via nth-child */
+.setting-card::after {
   position: absolute;
   right: 2rem;
-  font-size: 2rem;
-  opacity: 0.15;
-}
-
-.settings p:nth-child(3) {
-  border-left: 4px solid transparent;
-}
-
-.settings p:nth-child(3):hover {
-  border-left-color: #8b5cf6;
-}
-
-.settings p:nth-child(3)::after {
-  content: '🔒';
-  position: absolute;
-  right: 2rem;
-  font-size: 2rem;
-  opacity: 0.15;
-}
-
-.settings p:nth-child(4) {
-  border-left: 4px solid transparent;
-}
-
-.settings p:nth-child(4):hover {
-  border-left-color: #ec4899;
-}
-
-.settings p:nth-child(4)::after {
-  content: '🎨';
-  position: absolute;
-  right: 2rem;
-  font-size: 2rem;
-  opacity: 0.15;
-}
-
-.settings p:nth-child(5) {
-  border-left: 4px solid transparent;
-}
-
-.settings p:nth-child(5):hover {
-  border-left-color: #f59e0b;
-}
-
-.settings p:nth-child(5)::after {
-  content: '🔑';
-  position: absolute;
-  right: 2rem;
-  font-size: 2rem;
-  opacity: 0.15;
-}
-
-/* Icon styling for checkmark */
-.settings p::first-line {
-  font-size: 1.25rem;
-}
-
-/* Arrow indicator on hover */
-.settings p::after {
-  transition: all 0.3s ease;
-}
-
-.settings p:hover::after {
-  opacity: 0.3;
-  transform: translateX(-8px);
-}
-
-/* Add chevron arrow */
-.settings p {
-  padding-right: 4rem;
-}
-
-.settings p:before {
-  content: '›';
-  position: absolute;
-  right: 1.5rem;
-  font-size: 1.75rem;
-  color: #9ca3af;
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: all 0.3s ease;
-  font-weight: bold;
-}
-
-.settings p:hover:before {
-  opacity: 1;
-  transform: translateX(0);
-  color: #3b82f6;
-}
-
-/* Override before for border animation */
-.settings p {
-  padding-left: 2rem;
-}
-
-.settings p::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
-  opacity: 0;
+  font-size: 3.5rem;
+  opacity: 0.06;
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
-/* Re-add chevron with different approach */
-.settings p > span {
-  position: absolute;
-  right: 1.5rem;
-  font-size: 1.75rem;
-  color: #9ca3af;
-  opacity: 0;
-  transform: translateX(-10px);
+.setting-card:hover::after {
+  opacity: 0.1;
+}
+
+.setting-card:nth-child(2)::after { content: '🌙'; }
+.setting-card:nth-child(3)::after { content: '👤'; }
+.setting-card:nth-child(4)::after { content: '🗑️'; }
+
+/* Card heading */
+.setting-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Card input group (profile name row) */
+.setting-card input {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #1f2937;
+  background: #ffffff;
   transition: all 0.3s ease;
-  font-weight: bold;
+  box-sizing: border-box;
 }
 
-.settings p:hover > span {
-  opacity: 1;
-  transform: translateX(0);
-  color: #3b82f6;
+.setting-card input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
 }
 
-/* Simpler approach - add arrow via pseudo */
-.settings p {
+.setting-card input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Shared button styles */
+.setting-card button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
   position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.settings p:after {
+.setting-card button::before {
+  content: '';
   position: absolute;
-  right: 1.5rem;
-  opacity: 0;
-  transition: all 0.3s ease;
-  font-style: normal;
-  font-size: 1.5rem;
-  color: #9ca3af;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
 }
 
-.settings p:nth-child(2):after {
-  content: '→';
+.setting-card button:hover::before {
+  width: 300px;
+  height: 300px;
 }
 
-.settings p:nth-child(3):after {
-  content: '→';
+/* Dark mode button */
+.setting-card:nth-child(2) button {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.settings p:nth-child(4):after {
-  content: '→';
+.setting-card:nth-child(2) button:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
 }
 
-.settings p:nth-child(5):after {
-  content: '→';
+.setting-card:nth-child(2) button:active {
+  transform: translateY(0);
 }
 
-.settings p:hover:after {
-  opacity: 1;
-  color: #3b82f6;
-  right: 1.25rem;
+/* Save profile button */
+.setting-card:nth-child(3) button {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
+.setting-card:nth-child(3) button:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+}
+
+.setting-card:nth-child(3) button:active {
+  transform: translateY(0);
+}
+
+/* Danger card */
+.setting-card.danger {
+  background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+  border-color: #fecaca;
+}
+
+.setting-card.danger::before {
+  background: linear-gradient(180deg, #ef4444 0%, #dc2626 100%);
+}
+
+.setting-card.danger:hover {
+  border-color: #ef4444;
+  box-shadow: 0 8px 24px rgba(239, 68, 68, 0.15);
+}
+
+.setting-card.danger h4 {
+  color: #991b1b;
+}
+
+.setting-card.danger button {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.setting-card.danger button:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.setting-card.danger button:active {
+  transform: translateY(0);
+}
+
+/* Dark mode toggle active state */
+.setting-card:nth-child(2).active-dark button {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.4);
+}
+
+/* Dark theme support */
+body.dark .settings h2 {
+  color: #f1f5f9;
+}
+
+body.dark .setting-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border-color: #334155;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark .setting-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+body.dark .setting-card h4 {
+  color: #f1f5f9;
+}
+
+body.dark .setting-card input {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+body.dark .setting-card input:focus {
+  border-color: #3b82f6;
+}
+
+body.dark .setting-card input::placeholder {
+  color: #64748b;
+}
+
+body.dark .setting-card.danger {
+  background: linear-gradient(135deg, #2d1515 0%, #1f0a0a 100%);
+  border-color: #7f1d1d;
+}
+
+body.dark .setting-card.danger h4 {
+  color: #fca5a5;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .settings {
     padding: 1.5rem;
@@ -237,12 +268,44 @@
     font-size: 1.75rem;
   }
 
-  .settings p {
+  .setting-card {
     padding: 1.25rem 1.5rem;
-    font-size: 1rem;
+    gap: 1rem;
   }
 
-  .settings p:hover {
+  .setting-card:hover {
     transform: translateX(4px);
+  }
+
+  .setting-card h4 {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .setting-card input {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .setting-card button {
+    width: 100%;
+    padding: 0.75rem 1rem;
+  }
+
+  .setting-card::after {
+    font-size: 2.5rem;
+    right: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .settings {
+    padding: 1rem;
+  }
+
+  .setting-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem;
   }
 }

@@ -12,6 +12,40 @@
   letter-spacing: -0.025em;
 }
 
+/* Search input */
+.search-input {
+  width: 100%;
+  padding: 0.875rem 1.125rem 0.875rem 3rem;
+  margin-bottom: 1.25rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  color: #1f2937;
+  background-color: #ffffff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 1rem center;
+  background-size: 20px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
 /* Filter buttons */
 .task-filters {
   display: flex;
@@ -77,7 +111,6 @@
   box-shadow: 0 2px 6px rgba(59, 130, 246, 0.2);
 }
 
-/* Add icons to filter buttons */
 .task-filters button:nth-child(1)::after {
   content: ' 📋';
   font-size: 1rem;
@@ -93,6 +126,7 @@
   font-size: 1rem;
 }
 
+/* Task list */
 .tasks ul {
   list-style: none;
   padding: 0;
@@ -139,7 +173,71 @@
   transform: scaleY(1);
 }
 
-/* Completed tasks styling */
+/* Task inner div */
+.tasks li div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* Task span (title + toggle) */
+.tasks li span {
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  padding-right: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tasks li span:hover {
+  color: #1f2937;
+}
+
+/* Assigned to badge */
+.tasks li .assigned {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin: 0;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+}
+
+.tasks li .assigned::before {
+  content: '👤';
+  font-size: 0.75rem;
+}
+
+/* Completed task assigned badge */
+.tasks li.done .assigned {
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border-color: #86efac;
+  color: #065f46;
+}
+
+/* Pending task assigned badge */
+.tasks li:not(.done) .assigned {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+/* Completed tasks */
 .tasks li.done {
   background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
   border-color: #86efac;
@@ -171,7 +269,7 @@
   opacity: 0.7;
 }
 
-/* Pending tasks styling */
+/* Pending tasks */
 .tasks li:not(.done) {
   background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
   border-color: #fcd34d;
@@ -198,22 +296,6 @@
   pointer-events: none;
 }
 
-/* Task content */
-.tasks li span {
-  flex: 1;
-  cursor: pointer;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  transition: all 0.2s ease;
-  padding-right: 1rem;
-}
-
-.tasks li span:hover {
-  color: #1f2937;
-}
-
 /* Delete button */
 .tasks li button {
   background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
@@ -231,6 +313,8 @@
   position: relative;
   overflow: hidden;
   z-index: 2;
+  flex-shrink: 0;
+  align-self: center;
 }
 
 .tasks li button::before {
@@ -263,7 +347,7 @@
   box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
 }
 
-/* Empty state message */
+/* Empty state */
 .tasks p.empty,
 .tasks p {
   text-align: center;
@@ -277,6 +361,7 @@
   max-width: 500px;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .tasks {
     padding: 1.5rem;
@@ -284,6 +369,13 @@
 
   .tasks h2 {
     font-size: 1.75rem;
+  }
+
+  .search-input {
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    font-size: 0.9375rem;
+    background-size: 18px;
+    background-position: 0.875rem center;
   }
 
   .task-filters {
@@ -309,19 +401,41 @@
     right: 3rem;
   }
 
+  .tasks li span {
+    font-size: 0.95rem;
+  }
+
   .tasks li button {
     min-width: 36px;
     height: 36px;
     font-size: 1rem;
   }
 
-  .tasks li span {
-    font-size: 0.95rem;
+  .tasks li .assigned {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.625rem;
   }
 
   .tasks p,
   .tasks p.empty {
     font-size: 1.125rem;
     padding: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-filters button:nth-child(1)::after,
+  .task-filters button:nth-child(2)::after,
+  .task-filters button:nth-child(3)::after {
+    display: none;
+  }
+
+  .task-filters button {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8125rem;
+  }
+
+  .tasks li::after {
+    display: none;
   }
 }

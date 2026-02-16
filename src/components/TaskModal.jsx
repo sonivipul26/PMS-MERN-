@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import './TaskModal.css'
 
-function TaskModal({ onClose, onAddTask }) {
+function TaskModal({ onClose, onAddTask, members }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [assignedTo, setAssignedTo] = useState('')
 
   function handleCreate() {
     if (!title) return alert('Task title required')
@@ -12,7 +13,8 @@ function TaskModal({ onClose, onAddTask }) {
       id: Date.now(),
       title,
       description,
-      completed: false
+      completed: false,
+      assignedTo
     }
 
     onAddTask(newTask)
@@ -28,14 +30,27 @@ function TaskModal({ onClose, onAddTask }) {
           type="text"
           placeholder="Task title"
           value={title}
-          onChange={e => setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
 
         <textarea
           placeholder="Task description"
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)}
         />
+
+        {/* Assign member dropdown */}
+        <select
+          value={assignedTo}
+          onChange={(e) => setAssignedTo(e.target.value)}
+        >
+          <option value="">Assign to member</option>
+          {members.map(member => (
+            <option key={member.id} value={member.name}>
+              {member.name}
+            </option>
+          ))}
+        </select>
 
         <div className="modal-actions">
           <button className="cancel-btn" onClick={onClose}>
