@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import './TaskModal.css'
 
-function TaskModal({ onClose, onAddTask, members }) {
+function TaskModal({ onClose, onAddTask, members, projects }) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [assignedTo, setAssignedTo] = useState('')
+  const [projectId, setProjectId] = useState('')
 
   function handleCreate() {
     if (!title) return alert('Task title required')
@@ -14,7 +15,8 @@ function TaskModal({ onClose, onAddTask, members }) {
       title,
       description,
       completed: false,
-      assignedTo
+      assignedTo,
+      projectId
     }
 
     onAddTask(newTask)
@@ -39,7 +41,7 @@ function TaskModal({ onClose, onAddTask, members }) {
           onChange={(e) => setDescription(e.target.value)}
         />
 
-        {/* Assign member dropdown */}
+        {/* Assign Member */}
         <select
           value={assignedTo}
           onChange={(e) => setAssignedTo(e.target.value)}
@@ -48,6 +50,19 @@ function TaskModal({ onClose, onAddTask, members }) {
           {members.map(member => (
             <option key={member.id} value={member.name}>
               {member.name}
+            </option>
+          ))}
+        </select>
+
+        {/* Select Project */}
+        <select
+          value={projectId}
+          onChange={(e) => setProjectId(e.target.value)}
+        >
+          <option value="">Select project</option>
+          {projects.map(project => (
+            <option key={project.id} value={project.id}>
+              {project.name}
             </option>
           ))}
         </select>

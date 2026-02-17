@@ -3,10 +3,15 @@ import { useOutletContext } from 'react-router-dom'
 import './Tasks.css'
 
 function Tasks() {
-  const { tasks, toggleTask, deleteTask } = useOutletContext()
+  const { tasks, toggleTask, deleteTask, projects } = useOutletContext()
 
   const [filter, setFilter] = useState('all')
   const [search, setSearch] = useState('')
+
+  function getProjectName(projectId) {
+    const project = projects.find(p => p.id == projectId)
+    return project ? project.name : 'No Project'
+  }
 
   function getFilteredTasks() {
     let filtered = tasks
@@ -43,30 +48,13 @@ function Tasks() {
       />
 
       <div className="task-filters">
-        <button
-          className={filter === 'all' ? 'active' : ''}
-          onClick={() => setFilter('all')}
-        >
-          All
-        </button>
-
-        <button
-          className={filter === 'completed' ? 'active' : ''}
-          onClick={() => setFilter('completed')}
-        >
-          Completed
-        </button>
-
-        <button
-          className={filter === 'pending' ? 'active' : ''}
-          onClick={() => setFilter('pending')}
-        >
-          Pending
-        </button>
+        <button onClick={() => setFilter('all')}>All</button>
+        <button onClick={() => setFilter('completed')}>Completed</button>
+        <button onClick={() => setFilter('pending')}>Pending</button>
       </div>
 
       {filteredTasks.length === 0 ? (
-        <p className="empty">No tasks found.</p>
+        <p>No tasks found.</p>
       ) : (
         <ul>
           {filteredTasks.map(task => (
@@ -81,6 +69,10 @@ function Tasks() {
                     Assigned to: {task.assignedTo}
                   </p>
                 )}
+
+                <p className="project">
+                  Project: {getProjectName(task.projectId)}
+                </p>
               </div>
 
               <button onClick={() => deleteTask(task.id)}>❌</button>

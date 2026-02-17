@@ -18,6 +18,11 @@ function Home() {
     return saved ? JSON.parse(saved) : []
   })
 
+  const [projects, setProjects] = useState(() => {
+    const saved = localStorage.getItem('projects')
+    return saved ? JSON.parse(saved) : []
+  })
+
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks))
   }, [tasks])
@@ -25,6 +30,10 @@ function Home() {
   useEffect(() => {
     localStorage.setItem('members', JSON.stringify(members))
   }, [members])
+
+  useEffect(() => {
+    localStorage.setItem('projects', JSON.stringify(projects))
+  }, [projects])
 
   function addTask(task) {
     setTasks(prev => [...prev, task])
@@ -52,6 +61,14 @@ function Home() {
     setMembers(prev => prev.filter(member => member.id !== id))
   }
 
+  function addProject(project) {
+    setProjects(prev => [...prev, project])
+  }
+
+  function deleteProject(id) {
+    setProjects(prev => prev.filter(project => project.id !== id))
+  }
+
   return (
     <div className="home">
       <Sidebar />
@@ -67,7 +84,10 @@ function Home() {
               deleteTask,
               members,
               addMember,
-              deleteMember
+              deleteMember,
+              projects,
+              addProject,
+              deleteProject
             }}
           />
         </div>
@@ -78,6 +98,7 @@ function Home() {
           onClose={() => setShowModal(false)}
           onAddTask={addTask}
           members={members}
+          projects={projects}
         />
       )}
     </div>

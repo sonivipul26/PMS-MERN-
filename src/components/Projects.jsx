@@ -1,32 +1,80 @@
+import { useState } from 'react'
+import { useOutletContext } from 'react-router-dom'
 import './Projects.css'
 
 function Projects() {
-  const projects = [
-    { id: 1, name: 'TaskFlow App', status: 'In Progress' },
-    { id: 2, name: 'Portfolio Website', status: 'Completed' },
-    { id: 3, name: 'E-commerce UI', status: 'Pending' }
-  ]
+  const { projects, addProject, deleteProject } = useOutletContext()
+
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [status, setStatus] = useState('Active')
+
+  function handleAddProject() {
+    if (!name) return alert('Project name required')
+
+    const newProject = {
+      id: Date.now(),
+      name,
+      description,
+      status
+    }
+
+    addProject(newProject)
+    setName('')
+    setDescription('')
+    setStatus('Active')
+  }
 
   return (
     <div className="projects">
       <h2>Projects</h2>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Project Name</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
+      <div className="add-project">
+        <input
+          type="text"
+          placeholder="Project name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+
+        <input
+          type="text"
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option>Active</option>
+          <option>Completed</option>
+          <option>On Hold</option>
+        </select>
+
+        <button onClick={handleAddProject}>Add</button>
+      </div>
+
+      {projects.length === 0 ? (
+        <p>No projects yet.</p>
+      ) : (
+        <ul>
           {projects.map(project => (
-            <tr key={project.id}>
-              <td>{project.name}</td>
-              <td>{project.status}</td>
-            </tr>
+            <li key={project.id}>
+              <div>
+                <strong>{project.name}</strong>
+                <p>{project.description}</p>
+                <span className={`status ${project.status}`}>
+                  {project.status}
+                </span>
+              </div>
+
+              <button onClick={() => deleteProject(project.id)}>❌</button>
+            </li>
           ))}
-        </tbody>
-      </table>
+        </ul>
+      )}
     </div>
   )
 }
