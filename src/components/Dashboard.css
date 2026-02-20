@@ -1,354 +1,444 @@
+/* ─────────────────────────────────────────
+   DASHBOARD WRAPPER
+───────────────────────────────────────── */
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  background: transparent;
 }
 
+/* Page title */
 .dashboard > h2 {
   margin-bottom: 2.5rem;
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.85rem;
+  font-weight: 800;
   color: #1f2937;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #f1f5f9;
+  border-bottom: 1px solid #f1f5f9;
 }
 
-/* ======================== */
-/*     SECTION HEADINGS     */
-/* ======================== */
+/* ─────────────────────────────────────────
+   SECTION HEADINGS
+───────────────────────────────────────── */
 .dashboard > h3 {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.25rem 0;
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 10px;
   color: #64748b;
 }
 
 .dashboard > h3::before {
   content: '';
   display: inline-block;
-  width: 3px;
-  height: 1rem;
-  border-radius: 2px;
+  width: 4px;
+  height: 16px;
+  border-radius: 4px;
+  flex-shrink: 0;
 }
 
-/* Task heading — blue bar */
-.dashboard > h3:first-of-type {
-  color: #2563eb;
-}
-
-.dashboard > h3:first-of-type::before {
-  background: #2563eb;
-}
-
-.dashboard > h3:first-of-type::after {
+.dashboard > h3::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, #bfdbfe 0%, transparent 100%);
 }
 
-/* Project heading — purple bar */
-.dashboard > h3:last-of-type {
-  color: #7c3aed;
-  margin-top: 3rem;
-}
+/* Task Statistics — blue */
+.dashboard > h3:first-of-type { color: #2563eb; }
+.dashboard > h3:first-of-type::before { background: linear-gradient(180deg, #3b82f6, #6366f1); }
+.dashboard > h3:first-of-type::after  { background: linear-gradient(90deg, #bfdbfe, transparent); }
 
-.dashboard > h3:last-of-type::before {
-  background: #7c3aed;
-}
+/* Project Statistics — purple */
+.dashboard > h3:last-of-type { color: #7c3aed; margin-top: 2.5rem; }
+.dashboard > h3:last-of-type::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
+.dashboard > h3:last-of-type::after  { background: linear-gradient(90deg, #ddd6fe, transparent); }
 
-.dashboard > h3:last-of-type::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, #ddd6fe 0%, transparent 100%);
-}
-
-/* ======================== */
-/*        GRIDS             */
-/* ======================== */
+/* ─────────────────────────────────────────
+   GRID
+───────────────────────────────────────── */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
+  gap: 1rem;
 }
 
-/* ======================== */
-/*      BASE STAT CARD      */
-/* ======================== */
+/* ─────────────────────────────────────────
+   BASE STAT CARD — LIGHT MODE DEFAULT
+───────────────────────────────────────── */
 .stat-card {
-  padding: 1.75rem 1.75rem 1.5rem;
-  border-radius: 16px;
-  border: 1.5px solid #e5e7eb;
   background: #ffffff;
-  transition: all 0.3s ease;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 22px 22px 18px;
   position: relative;
   overflow: hidden;
   cursor: default;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-/* Colored bottom border accent */
+/* Top accent bar */
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 16px 16px 0 0;
+}
+
+/* Icon box — top right */
 .stat-card::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
-  border-radius: 0 0 16px 16px;
+  top: 18px;
+  right: 18px;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  background-size: 55%;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.25s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
-.stat-card:hover::after {
-  transform: scaleX(1);
-}
+.stat-card:hover::after { transform: scale(1.1); }
 
-/* Number */
+/* Value number */
 .stat-card h3 {
-  font-size: 3.25rem;
+  font-size: 3rem;
   font-weight: 800;
-  margin: 0;
+  margin: 0 0 32px 0;
   line-height: 1;
-  letter-spacing: -0.03em;
-  transition: transform 0.3s ease;
+  letter-spacing: -0.04em;
+  transition: transform 0.25s ease;
 }
 
 .stat-card:hover h3 {
   transform: scale(1.04);
-}
-
-/* Icon watermark */
-.stat-card h3::after {
-  display: block;
-  font-size: 1.75rem;
-  margin-top: 0.625rem;
-  line-height: 1;
-  opacity: 0.85;
+  transform-origin: left;
 }
 
 /* Label */
 .stat-card p {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  margin: 0.875rem 0 0 0;
+  margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #94a3b8;
 }
 
-/* Left accent line */
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 1.25rem;
-  left: 0;
-  width: 3px;
-  height: calc(100% - 2.5rem);
-  border-radius: 0 2px 2px 0;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+/* ─────────────────────────────────────────
+   TASK CARDS — LIGHT MODE
+───────────────────────────────────────── */
+
+/* Total Tasks */
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::before {
+  background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2'/%3E%3Crect x='9' y='3' width='6' height='4' rx='1'/%3E%3Cline x1='9' y1='12' x2='15' y2='12'/%3E%3Cline x1='9' y1='16' x2='13' y2='16'/%3E%3C/svg%3E");
+}
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #1d4ed8; }
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #2563eb; }
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+  border-color: #bfdbfe;
+  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.1);
 }
 
-.stat-card:hover::before {
-  opacity: 1;
+/* Completed Tasks */
+.stats-grid:first-of-type .stat-card.completed::before {
+  background: linear-gradient(90deg, #10b981, #34d399);
+}
+.stats-grid:first-of-type .stat-card.completed::after {
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 11-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
+}
+.stats-grid:first-of-type .stat-card.completed h3 { color: #059669; }
+.stats-grid:first-of-type .stat-card.completed p  { color: #10b981; }
+.stats-grid:first-of-type .stat-card.completed:hover {
+  border-color: #a7f3d0;
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.1);
 }
 
-/* ============================== */
-/*        TASK CARDS              */
-/* ============================== */
-
-/* Total Tasks — blue */
-.stats-grid:first-of-type .stat-card:nth-child(1) {
-  border-color: #e5e7eb;
+/* Pending Tasks */
+.stats-grid:first-of-type .stat-card.pending::before {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24);
 }
-.stats-grid:first-of-type .stat-card:nth-child(1)::before { background: #2563eb; }
-.stats-grid:first-of-type .stat-card:nth-child(1)::after { background: linear-gradient(90deg, #2563eb, #60a5fa); }
-.stats-grid:first-of-type .stat-card:nth-child(1):hover { border-color: #bfdbfe; box-shadow: 0 12px 32px rgba(37, 99, 235, 0.1); }
-.stats-grid:first-of-type .stat-card:nth-child(1) h3 { color: #1d4ed8; }
-.stats-grid:first-of-type .stat-card:nth-child(1) h3::after { content: '📋'; }
-.stats-grid:first-of-type .stat-card:nth-child(1) p { color: #2563eb; }
-
-/* Completed Tasks — emerald */
-.stats-grid:first-of-type .stat-card:nth-child(2) {
-  border-color: #e5e7eb;
+.stats-grid:first-of-type .stat-card.pending::after {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
 }
-.stats-grid:first-of-type .stat-card:nth-child(2)::before { background: #10b981; }
-.stats-grid:first-of-type .stat-card:nth-child(2)::after { background: linear-gradient(90deg, #10b981, #34d399); }
-.stats-grid:first-of-type .stat-card:nth-child(2):hover { border-color: #a7f3d0; box-shadow: 0 12px 32px rgba(16, 185, 129, 0.1); }
-.stats-grid:first-of-type .stat-card:nth-child(2) h3 { color: #059669; }
-.stats-grid:first-of-type .stat-card:nth-child(2) h3::after { content: '✅'; }
-.stats-grid:first-of-type .stat-card:nth-child(2) p { color: #10b981; }
-
-/* Pending Tasks — amber */
-.stats-grid:first-of-type .stat-card:nth-child(3) {
-  border-color: #e5e7eb;
+.stats-grid:first-of-type .stat-card.pending h3 { color: #d97706; }
+.stats-grid:first-of-type .stat-card.pending p  { color: #f59e0b; }
+.stats-grid:first-of-type .stat-card.pending:hover {
+  border-color: #fde68a;
+  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.1);
 }
-.stats-grid:first-of-type .stat-card:nth-child(3)::before { background: #f59e0b; }
-.stats-grid:first-of-type .stat-card:nth-child(3)::after { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
-.stats-grid:first-of-type .stat-card:nth-child(3):hover { border-color: #fde68a; box-shadow: 0 12px 32px rgba(245, 158, 11, 0.1); }
-.stats-grid:first-of-type .stat-card:nth-child(3) h3 { color: #d97706; }
-.stats-grid:first-of-type .stat-card:nth-child(3) h3::after { content: '⏳'; }
-.stats-grid:first-of-type .stat-card:nth-child(3) p { color: #f59e0b; }
 
-/* Completion Rate — rose */
-.stats-grid:first-of-type .stat-card:nth-child(4) {
-  border-color: #e5e7eb;
+/* Completion Rate */
+.stats-grid:first-of-type .stat-card.rate::before {
+  background: linear-gradient(90deg, #ef4444, #f87171);
 }
-.stats-grid:first-of-type .stat-card:nth-child(4)::before { background: #f43f5e; }
-.stats-grid:first-of-type .stat-card:nth-child(4)::after { background: linear-gradient(90deg, #f43f5e, #fb7185); }
-.stats-grid:first-of-type .stat-card:nth-child(4):hover { border-color: #fecdd3; box-shadow: 0 12px 32px rgba(244, 63, 94, 0.1); }
-.stats-grid:first-of-type .stat-card:nth-child(4) h3 { color: #e11d48; }
-.stats-grid:first-of-type .stat-card:nth-child(4) h3::after { content: '📊'; }
-.stats-grid:first-of-type .stat-card:nth-child(4) p { color: #f43f5e; }
+.stats-grid:first-of-type .stat-card.rate::after {
+  background-color: #fff1f2;
+  border: 1px solid #fecdd3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3Cline x1='3' y1='20' x2='21' y2='20'/%3E%3C/svg%3E");
+}
+.stats-grid:first-of-type .stat-card.rate h3 { color: #e11d48; }
+.stats-grid:first-of-type .stat-card.rate p  { color: #ef4444; }
+.stats-grid:first-of-type .stat-card.rate:hover {
+  border-color: #fecdd3;
+  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.1);
+}
 
-/* ============================== */
-/*       PROJECT CARDS            */
-/* Uses dashed borders + bold     */
-/*  left strip to differ visually */
-/* ============================== */
-
+/* ─────────────────────────────────────────
+   PROJECT CARDS — LIGHT MODE
+───────────────────────────────────────── */
 .stats-grid:last-of-type .stat-card {
   border-style: dashed;
   border-width: 1.5px;
-  border-radius: 12px;
+  border-radius: 14px;
 }
 
-/* Top stripe instead of bottom */
-.stats-grid:last-of-type .stat-card::after {
-  bottom: auto;
-  top: 0;
-  border-radius: 12px 12px 0 0;
-  height: 3px;
-  width: 40%;
-  transform: scaleX(1);
-  opacity: 0.6;
-  transition: width 0.4s ease, opacity 0.3s ease;
+/* Total Projects */
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) {
+  border-color: #c4b5fd;
+}
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::before {
+  background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+  background-color: #f5f3ff;
+  border: 1px solid #ddd6fe;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 012-2h4l2 2.5h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z'/%3E%3C/svg%3E");
+}
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #7c3aed; }
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #8b5cf6; }
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.1);
 }
 
-.stats-grid:last-of-type .stat-card:hover::after {
-  width: 100%;
-  opacity: 1;
-  transform: scaleX(1);
+/* Active Projects */
+.stats-grid:last-of-type .stat-card.completed { border-color: #5eead4; }
+.stats-grid:last-of-type .stat-card.completed::before {
+  background: linear-gradient(90deg, #0d9488, #2dd4bf);
+}
+.stats-grid:last-of-type .stat-card.completed::after {
+  background-color: #f0fdfa;
+  border: 1px solid #99f6e4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E");
+}
+.stats-grid:last-of-type .stat-card.completed h3 { color: #0d9488; }
+.stats-grid:last-of-type .stat-card.completed p  { color: #14b8a6; }
+.stats-grid:last-of-type .stat-card.completed:hover {
+  border-color: #14b8a6;
+  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.1);
 }
 
-/* Total Projects — violet */
-.stats-grid:last-of-type .stat-card:nth-child(1) { border-color: #c4b5fd; }
-.stats-grid:last-of-type .stat-card:nth-child(1)::before { background: #7c3aed; }
-.stats-grid:last-of-type .stat-card:nth-child(1)::after { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
-.stats-grid:last-of-type .stat-card:nth-child(1):hover { border-color: #8b5cf6; box-shadow: 0 12px 32px rgba(124, 58, 237, 0.1); }
-.stats-grid:last-of-type .stat-card:nth-child(1) h3 { color: #7c3aed; }
-.stats-grid:last-of-type .stat-card:nth-child(1) h3::after { content: '🗂️'; }
-.stats-grid:last-of-type .stat-card:nth-child(1) p { color: #7c3aed; }
+/* Completed Projects */
+.stats-grid:last-of-type .stat-card.rate { border-color: #a5b4fc; }
+.stats-grid:last-of-type .stat-card.rate::before {
+  background: linear-gradient(90deg, #4f46e5, #818cf8);
+}
+.stats-grid:last-of-type .stat-card.rate::after {
+  background-color: #eef2ff;
+  border: 1px solid #c7d2fe;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
+}
+.stats-grid:last-of-type .stat-card.rate h3 { color: #4f46e5; }
+.stats-grid:last-of-type .stat-card.rate p  { color: #6366f1; }
+.stats-grid:last-of-type .stat-card.rate:hover {
+  border-color: #6366f1;
+  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
+}
 
-/* Active Projects — teal */
-.stats-grid:last-of-type .stat-card:nth-child(2) { border-color: #5eead4; }
-.stats-grid:last-of-type .stat-card:nth-child(2)::before { background: #0d9488; }
-.stats-grid:last-of-type .stat-card:nth-child(2)::after { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
-.stats-grid:last-of-type .stat-card:nth-child(2):hover { border-color: #14b8a6; box-shadow: 0 12px 32px rgba(13, 148, 136, 0.1); }
-.stats-grid:last-of-type .stat-card:nth-child(2) h3 { color: #0d9488; }
-.stats-grid:last-of-type .stat-card:nth-child(2) h3::after { content: '🚀'; }
-.stats-grid:last-of-type .stat-card:nth-child(2) p { color: #0d9488; }
+/* On Hold Projects */
+.stats-grid:last-of-type .stat-card.pending { border-color: #fcd34d; }
+.stats-grid:last-of-type .stat-card.pending::before {
+  background: linear-gradient(90deg, #d97706, #fbbf24);
+}
+.stats-grid:last-of-type .stat-card.pending::after {
+  background-color: #fffbeb;
+  border: 1px solid #fde68a;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d97706' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='10' y1='15' x2='10' y2='9'/%3E%3Cline x1='14' y1='15' x2='14' y2='9'/%3E%3C/svg%3E");
+}
+.stats-grid:last-of-type .stat-card.pending h3 { color: #d97706; }
+.stats-grid:last-of-type .stat-card.pending p  { color: #f59e0b; }
+.stats-grid:last-of-type .stat-card.pending:hover {
+  border-color: #f59e0b;
+  box-shadow: 0 12px 32px rgba(217, 119, 6, 0.1);
+}
 
-/* Completed Projects — indigo */
-.stats-grid:last-of-type .stat-card:nth-child(3) { border-color: #a5b4fc; }
-.stats-grid:last-of-type .stat-card:nth-child(3)::before { background: #4f46e5; }
-.stats-grid:last-of-type .stat-card:nth-child(3)::after { background: linear-gradient(90deg, #4f46e5, #818cf8); }
-.stats-grid:last-of-type .stat-card:nth-child(3):hover { border-color: #6366f1; box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1); }
-.stats-grid:last-of-type .stat-card:nth-child(3) h3 { color: #4f46e5; }
-.stats-grid:last-of-type .stat-card:nth-child(3) h3::after { content: '🏁'; }
-.stats-grid:last-of-type .stat-card:nth-child(3) p { color: #4f46e5; }
-
-/* On Hold Projects — amber */
-.stats-grid:last-of-type .stat-card:nth-child(4) { border-color: #fcd34d; }
-.stats-grid:last-of-type .stat-card:nth-child(4)::before { background: #d97706; }
-.stats-grid:last-of-type .stat-card:nth-child(4)::after { background: linear-gradient(90deg, #d97706, #fbbf24); }
-.stats-grid:last-of-type .stat-card:nth-child(4):hover { border-color: #f59e0b; box-shadow: 0 12px 32px rgba(217, 119, 6, 0.1); }
-.stats-grid:last-of-type .stat-card:nth-child(4) h3 { color: #d97706; }
-.stats-grid:last-of-type .stat-card:nth-child(4) h3::after { content: '⏸️'; }
-.stats-grid:last-of-type .stat-card:nth-child(4) p { color: #d97706; }
-
-/* ======================== */
-/*        DARK MODE         */
-/* ======================== */
+/* ─────────────────────────────────────────
+   DARK MODE  (body.dark)
+───────────────────────────────────────── */
 body.dark .dashboard > h2 {
   color: #f1f5f9;
   border-bottom-color: #1e293b;
 }
 
 body.dark .dashboard > h3:first-of-type { color: #60a5fa; }
-body.dark .dashboard > h3:first-of-type::before { background: #60a5fa; }
-body.dark .dashboard > h3:first-of-type::after { background: linear-gradient(90deg, #1e3a5f 0%, transparent); }
+body.dark .dashboard > h3:first-of-type::before { background: linear-gradient(180deg, #60a5fa, #818cf8); }
+body.dark .dashboard > h3:first-of-type::after  { background: linear-gradient(90deg, rgba(96,165,250,0.2), transparent); }
 
 body.dark .dashboard > h3:last-of-type { color: #a78bfa; }
-body.dark .dashboard > h3:last-of-type::before { background: #a78bfa; }
-body.dark .dashboard > h3:last-of-type::after { background: linear-gradient(90deg, #2e1065 0%, transparent); }
+body.dark .dashboard > h3:last-of-type::before { background: linear-gradient(180deg, #a78bfa, #c4b5fd); }
+body.dark .dashboard > h3:last-of-type::after  { background: linear-gradient(90deg, rgba(167,139,250,0.2), transparent); }
 
+/* Dark base card */
 body.dark .stat-card {
-  background: #1e293b;
-  border-color: #334155;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  background: #131727;
+  border-color: rgba(255, 255, 255, 0.06);
+  border-style: solid;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-body.dark .stats-grid:last-of-type .stat-card { border-style: dashed; }
+body.dark .stats-grid:last-of-type .stat-card {
+  border-style: dashed;
+}
 
-body.dark .stats-grid:first-of-type .stat-card:nth-child(1):hover { border-color: #1d4ed8; box-shadow: 0 12px 32px rgba(37, 99, 235, 0.15); }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(1) h3 { color: #60a5fa; }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(1) p { color: #93c5fd; }
+/* Dark — Total Tasks */
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+  background-color: rgba(59,130,246,0.12);
+  border-color: rgba(59,130,246,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2'/%3E%3Crect x='9' y='3' width='6' height='4' rx='1'/%3E%3Cline x1='9' y1='12' x2='15' y2='12'/%3E%3Cline x1='9' y1='16' x2='13' y2='16'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #60a5fa; }
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #3b82f6; }
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+  border-color: rgba(59,130,246,0.3);
+  box-shadow: 0 16px 36px rgba(59,130,246,0.12);
+}
 
-body.dark .stats-grid:first-of-type .stat-card:nth-child(2):hover { border-color: #059669; box-shadow: 0 12px 32px rgba(16, 185, 129, 0.15); }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(2) h3 { color: #34d399; }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(2) p { color: #6ee7b7; }
+/* Dark — Completed Tasks */
+body.dark .stats-grid:first-of-type .stat-card.completed::after {
+  background-color: rgba(16,185,129,0.12);
+  border-color: rgba(16,185,129,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2334d399' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 11-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:first-of-type .stat-card.completed h3 { color: #34d399; }
+body.dark .stats-grid:first-of-type .stat-card.completed p  { color: #10b981; }
+body.dark .stats-grid:first-of-type .stat-card.completed:hover {
+  border-color: rgba(16,185,129,0.3);
+  box-shadow: 0 16px 36px rgba(16,185,129,0.12);
+}
 
-body.dark .stats-grid:first-of-type .stat-card:nth-child(3):hover { border-color: #d97706; box-shadow: 0 12px 32px rgba(245, 158, 11, 0.15); }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(3) h3 { color: #fbbf24; }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(3) p { color: #fde68a; }
+/* Dark — Pending Tasks */
+body.dark .stats-grid:first-of-type .stat-card.pending::after {
+  background-color: rgba(245,158,11,0.12);
+  border-color: rgba(245,158,11,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fbbf24' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:first-of-type .stat-card.pending h3 { color: #fbbf24; }
+body.dark .stats-grid:first-of-type .stat-card.pending p  { color: #f59e0b; }
+body.dark .stats-grid:first-of-type .stat-card.pending:hover {
+  border-color: rgba(245,158,11,0.3);
+  box-shadow: 0 16px 36px rgba(245,158,11,0.12);
+}
 
-body.dark .stats-grid:first-of-type .stat-card:nth-child(4):hover { border-color: #e11d48; box-shadow: 0 12px 32px rgba(244, 63, 94, 0.15); }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(4) h3 { color: #fb7185; }
-body.dark .stats-grid:first-of-type .stat-card:nth-child(4) p { color: #fda4af; }
+/* Dark — Completion Rate */
+body.dark .stats-grid:first-of-type .stat-card.rate::after {
+  background-color: rgba(239,68,68,0.12);
+  border-color: rgba(239,68,68,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f87171' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3Cline x1='3' y1='20' x2='21' y2='20'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:first-of-type .stat-card.rate h3 { color: #f87171; }
+body.dark .stats-grid:first-of-type .stat-card.rate p  { color: #ef4444; }
+body.dark .stats-grid:first-of-type .stat-card.rate:hover {
+  border-color: rgba(239,68,68,0.3);
+  box-shadow: 0 16px 36px rgba(239,68,68,0.12);
+}
 
-body.dark .stats-grid:last-of-type .stat-card:nth-child(1) { border-color: #6d28d9; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(1) h3 { color: #a78bfa; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(1) p { color: #c4b5fd; }
+/* Dark — Total Projects */
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) {
+  border-color: rgba(139,92,246,0.35);
+}
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+  background-color: rgba(139,92,246,0.12);
+  border-color: rgba(139,92,246,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a78bfa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 012-2h4l2 2.5h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #a78bfa; }
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #8b5cf6; }
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+  border-color: rgba(139,92,246,0.5);
+  box-shadow: 0 16px 36px rgba(139,92,246,0.12);
+}
 
-body.dark .stats-grid:last-of-type .stat-card:nth-child(2) { border-color: #0f766e; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(2) h3 { color: #2dd4bf; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(2) p { color: #5eead4; }
+/* Dark — Active Projects */
+body.dark .stats-grid:last-of-type .stat-card.completed { border-color: rgba(20,184,166,0.35); }
+body.dark .stats-grid:last-of-type .stat-card.completed::after {
+  background-color: rgba(20,184,166,0.12);
+  border-color: rgba(20,184,166,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232dd4bf' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:last-of-type .stat-card.completed h3 { color: #2dd4bf; }
+body.dark .stats-grid:last-of-type .stat-card.completed p  { color: #14b8a6; }
+body.dark .stats-grid:last-of-type .stat-card.completed:hover {
+  border-color: rgba(20,184,166,0.5);
+  box-shadow: 0 16px 36px rgba(20,184,166,0.12);
+}
 
-body.dark .stats-grid:last-of-type .stat-card:nth-child(3) { border-color: #3730a3; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(3) h3 { color: #818cf8; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(3) p { color: #a5b4fc; }
+/* Dark — Completed Projects */
+body.dark .stats-grid:last-of-type .stat-card.rate { border-color: rgba(99,102,241,0.35); }
+body.dark .stats-grid:last-of-type .stat-card.rate::after {
+  background-color: rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:last-of-type .stat-card.rate h3 { color: #818cf8; }
+body.dark .stats-grid:last-of-type .stat-card.rate p  { color: #6366f1; }
+body.dark .stats-grid:last-of-type .stat-card.rate:hover {
+  border-color: rgba(99,102,241,0.5);
+  box-shadow: 0 16px 36px rgba(99,102,241,0.12);
+}
 
-body.dark .stats-grid:last-of-type .stat-card:nth-child(4) { border-color: #b45309; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(4) h3 { color: #fbbf24; }
-body.dark .stats-grid:last-of-type .stat-card:nth-child(4) p { color: #fde68a; }
+/* Dark — On Hold */
+body.dark .stats-grid:last-of-type .stat-card.pending { border-color: rgba(249,115,22,0.35); }
+body.dark .stats-grid:last-of-type .stat-card.pending::after {
+  background-color: rgba(249,115,22,0.12);
+  border-color: rgba(249,115,22,0.2);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fb923c' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cline x1='10' y1='15' x2='10' y2='9'/%3E%3Cline x1='14' y1='15' x2='14' y2='9'/%3E%3C/svg%3E");
+}
+body.dark .stats-grid:last-of-type .stat-card.pending h3 { color: #fb923c; }
+body.dark .stats-grid:last-of-type .stat-card.pending p  { color: #f97316; }
+body.dark .stats-grid:last-of-type .stat-card.pending:hover {
+  border-color: rgba(249,115,22,0.5);
+  box-shadow: 0 16px 36px rgba(249,115,22,0.12);
+}
 
-
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
 @media (max-width: 1024px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .dashboard { padding: 1.5rem; }
-  .dashboard > h2 { font-size: 1.75rem; margin-bottom: 2rem; }
-  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .stat-card { padding: 1.25rem 1.25rem 1rem; }
-  .stat-card h3 { font-size: 2.5rem; }
-  .stat-card h3::after { font-size: 1.5rem; margin-top: 0.5rem; }
+  .dashboard > h2 { font-size: 1.5rem; margin-bottom: 1.75rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.875rem; }
+  .stat-card { padding: 18px 18px 14px; }
+  .stat-card h3 { font-size: 2.4rem; margin-bottom: 26px; }
+  .stat-card::after { width: 36px; height: 36px; top: 14px; right: 14px; }
 }
 
 @media (max-width: 480px) {
