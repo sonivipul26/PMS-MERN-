@@ -8,65 +8,104 @@ import './Home.css'
 function Home() {
   const [showModal, setShowModal] = useState(false)
 
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('tasks')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [tasks, setTasks] = useState([])
+  const [projects, setProjects] = useState([])
+  const [members, setMembers] = useState([])
 
-  const [members, setMembers] = useState(() => {
-    const saved = localStorage.getItem('members')
-    return saved ? JSON.parse(saved) : []
-  })
-
-  const [projects, setProjects] = useState(() => {
-    const saved = localStorage.getItem('projects')
-    return saved ? JSON.parse(saved) : []
-  })
+  
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  }, [tasks])
+    fetch('http://localhost:5000/tasks')
+      .then(res => res.json())
+      .then(data => setTasks(data))
 
-  useEffect(() => {
-    localStorage.setItem('members', JSON.stringify(members))
-  }, [members])
+    fetch('http://localhost:5000/projects')
+      .then(res => res.json())
+      .then(data => setProjects(data))
 
-  useEffect(() => {
-    localStorage.setItem('projects', JSON.stringify(projects))
-  }, [projects])
+    fetch('http://localhost:5000/members')
+      .then(res => res.json())
+      .then(data => setMembers(data))
+  }, [])
+
+  
 
   function addTask(task) {
-    setTasks(prev => [...prev, task])
+    fetch('http://localhost:5000/tasks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(task)
+    })
+      .then(res => res.json())
+      .then(newTask => setTasks(prev => [...prev, newTask]))
   }
 
   function toggleTask(id) {
-    setTasks(prev =>
-      prev.map(task =>
-        task.id === id
-          ? { ...task, completed: !task.completed }
-          : task
+    const task = tasks.find(t => t.id === id)
+
+    fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ completed: !task.completed })
+    }).then(() => {
+      setTasks(prev =>
+        prev.map(t =>
+          t.id === id ? { ...t, completed: !t.completed } : t
+        )
       )
-    )
+    })
   }
 
   function deleteTask(id) {
-    setTasks(prev => prev.filter(task => task.id !== id))
+    fetch(`http://localhost:5000/tasks/${id}`, {
+      method: 'DELETE'
+    }).then(() => {
+      setTasks(prev => prev.filter(t => t.id !== id))
+    })
   }
 
-  function addMember(member) {
-    setMembers(prev => [...prev, member])
-  }
-
-  function deleteMember(id) {
-    setMembers(prev => prev.filter(member => member.id !== id))
-  }
+ 
 
   function addProject(project) {
-    setProjects(prev => [...prev, project])
+    fetch('http://localhost:5000/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(project)
+    })
+      .then(res => res.json())
+      .then(newProject =>
+        setProjects(prev => [...prev, newProject])
+      )
   }
 
   function deleteProject(id) {
-    setProjects(prev => prev.filter(project => project.id !== id))
+    fetch(`http://localhost:5000/projects/${id}`, {
+      method: 'DELETE'
+    }).then(() => {
+      setProjects(prev => prev.filter(p => p.id !== id))
+    })
+  }
+
+  
+
+  function addMember(member) {
+    fetch('http://localhost:5000/members', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(member)
+    })
+      .then(res => res.json())
+      .then(newMember =>
+        setMembers(prev => [...prev, newMember])
+      )
+  }
+
+  function deleteMember(id) {
+    fetch(`http://localhost:5000/members/${id}`, {
+      method: 'DELETE'
+    }).then(() => {
+      setMembers(prev => prev.filter(m => m.id !== id))
+    })
   }
 
   return (
@@ -82,12 +121,12 @@ function Home() {
               tasks,
               toggleTask,
               deleteTask,
-              members,
-              addMember,
-              deleteMember,
               projects,
               addProject,
-              deleteProject
+              deleteProject,
+              members,
+              addMember,
+              deleteMember
             }}
           />
         </div>
