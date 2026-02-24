@@ -12,100 +12,169 @@ function Home() {
   const [projects, setProjects] = useState([])
   const [members, setMembers] = useState([])
 
-  
-
+  // ================= FETCH ALL DATA =================
   useEffect(() => {
-    fetch('http://localhost:5000/tasks')
-      .then(res => res.json())
-      .then(data => setTasks(data))
-
-    fetch('http://localhost:5000/projects')
-      .then(res => res.json())
-      .then(data => setProjects(data))
-
-    fetch('http://localhost:5000/members')
-      .then(res => res.json())
-      .then(data => setMembers(data))
+    fetchTasks()
+    fetchProjects()
+    fetchMembers()
   }, [])
 
-  
-
-  function addTask(task) {
-    fetch('http://localhost:5000/tasks', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(task)
-    })
-      .then(res => res.json())
-      .then(newTask => setTasks(prev => [...prev, newTask]))
+  async function fetchTasks() {
+    try {
+      const res = await fetch('http://localhost:5000/tasks')
+      const data = await res.json()
+      setTasks(data)
+    } catch (err) {
+      console.error('Error fetching tasks:', err)
+    }
   }
 
-  function toggleTask(id) {
-    const task = tasks.find(t => t.id === id)
+  async function fetchProjects() {
+    try {
+      const res = await fetch('http://localhost:5000/projects')
+      const data = await res.json()
+      setProjects(data)
+    } catch (err) {
+      console.error('Error fetching projects:', err)
+    }
+  }
 
-    fetch(`http://localhost:5000/tasks/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ completed: !task.completed })
-    }).then(() => {
+  async function fetchMembers() {
+    try {
+      const res = await fetch('http://localhost:5000/members')
+      const data = await res.json()
+      setMembers(data)
+    } catch (err) {
+      console.error('Error fetching members:', err)
+    }
+  }
+
+  // ================= TASK FUNCTIONS =================
+
+  async function addTask(task) {
+    try {
+      const res = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(task)
+      })
+
+      const newTask = await res.json()
+      setTasks(prev => [...prev, newTask])
+    } catch (err) {
+      console.error('Error adding task:', err)
+    }
+  }
+
+  async function toggleTask(id) {
+    try {
+      const task = tasks.find(t => t._id === id)
+
+      await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ completed: !task.completed })
+      })
+
       setTasks(prev =>
         prev.map(t =>
-          t.id === id ? { ...t, completed: !t.completed } : t
+          t._id === id ? { ...t, completed: !t.completed } : t
         )
       )
-    })
+    } catch (err) {
+      console.error('Error toggling task:', err)
+    }
   }
 
-  function deleteTask(id) {
-    fetch(`http://localhost:5000/tasks/${id}`, {
-      method: 'DELETE'
-    }).then(() => {
-      setTasks(prev => prev.filter(t => t.id !== id))
-    })
-  }
+  // ✅ NEW: Generic update function (used for subtasks)
+  async function updateTask(id, updatedData) {
+    try {
+      await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedData)
+      })
 
- 
-
-  function addProject(project) {
-    fetch('http://localhost:5000/projects', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(project)
-    })
-      .then(res => res.json())
-      .then(newProject =>
-        setProjects(prev => [...prev, newProject])
+      setTasks(prev =>
+        prev.map(task =>
+          task._id === id
+            ? { ...task, ...updatedData }
+            : task
+        )
       )
+    } catch (err) {
+      console.error('Error updating task:', err)
+    }
   }
 
-  function deleteProject(id) {
-    fetch(`http://localhost:5000/projects/${id}`, {
-      method: 'DELETE'
-    }).then(() => {
-      setProjects(prev => prev.filter(p => p.id !== id))
-    })
+  async function deleteTask(id) {
+    try {
+      await fetch(`http://localhost:5000/tasks/${id}`, {
+        method: 'DELETE'
+      })
+
+      setTasks(prev => prev.filter(t => t._id !== id))
+    } catch (err) {
+      console.error('Error deleting task:', err)
+    }
   }
 
-  
+  // ================= PROJECT FUNCTIONS =================
 
-  function addMember(member) {
-    fetch('http://localhost:5000/members', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(member)
-    })
-      .then(res => res.json())
-      .then(newMember =>
-        setMembers(prev => [...prev, newMember])
-      )
+  async function addProject(project) {
+    try {
+      const res = await fetch('http://localhost:5000/projects', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(project)
+      })
+
+      const newProject = await res.json()
+      setProjects(prev => [...prev, newProject])
+    } catch (err) {
+      console.error('Error adding project:', err)
+    }
   }
 
-  function deleteMember(id) {
-    fetch(`http://localhost:5000/members/${id}`, {
-      method: 'DELETE'
-    }).then(() => {
-      setMembers(prev => prev.filter(m => m.id !== id))
-    })
+  async function deleteProject(id) {
+    try {
+      await fetch(`http://localhost:5000/projects/${id}`, {
+        method: 'DELETE'
+      })
+
+      setProjects(prev => prev.filter(p => p._id !== id))
+    } catch (err) {
+      console.error('Error deleting project:', err)
+    }
+  }
+
+  // ================= MEMBER FUNCTIONS =================
+
+  async function addMember(member) {
+    try {
+      const res = await fetch('http://localhost:5000/members', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(member)
+      })
+
+      const newMember = await res.json()
+      setMembers(prev => [...prev, newMember])
+    } catch (err) {
+      console.error('Error adding member:', err)
+    }
+  }
+
+  async function deleteMember(id) {
+    try {
+      await fetch(`http://localhost:5000/members/${id}`, {
+        method: 'DELETE'
+      })
+
+      setMembers(prev => prev.filter(m => m._id !== id))
+    } catch (err) {
+      console.error('Error deleting member:', err)
+    }
   }
 
   return (
@@ -119,12 +188,14 @@ function Home() {
           <Outlet
             context={{
               tasks,
-              toggleTask,
-              deleteTask,
               projects,
+              members,
+              addTask,
+              toggleTask,
+              updateTask,   // ✅ important
+              deleteTask,
               addProject,
               deleteProject,
-              members,
               addMember,
               deleteMember
             }}

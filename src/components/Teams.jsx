@@ -9,15 +9,17 @@ function Teams() {
   const [role, setRole] = useState('')
 
   function handleAddMember() {
-    if (!name || !role) return alert('All fields required')
+    if (!name.trim() || !role.trim())
+      return alert('All fields required')
 
+    // ✅ Do NOT create id manually
     const newMember = {
-      id: Date.now(),
       name,
       role
     }
 
     addMember(newMember)
+
     setName('')
     setRole('')
   }
@@ -41,19 +43,28 @@ function Teams() {
           onChange={(e) => setRole(e.target.value)}
         />
 
-        <button onClick={handleAddMember}>Add Member</button>
+        <button onClick={handleAddMember}>
+          Add Member
+        </button>
       </div>
 
       {members.length === 0 ? (
-        <p className="empty">No team members added.</p>
+        <p className="empty">
+          No team members added.
+        </p>
       ) : (
         <ul>
           {members.map(member => (
-            <li key={member.id}>
+            <li key={member._id}>
               <div>
                 <strong>{member.name}</strong> — {member.role}
               </div>
-              <button onClick={() => deleteMember(member.id)}>❌</button>
+
+              <button
+                onClick={() => deleteMember(member._id)}
+              >
+                ❌
+              </button>
             </li>
           ))}
         </ul>

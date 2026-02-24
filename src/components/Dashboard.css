@@ -8,7 +8,6 @@
   background: transparent;
 }
 
-/* Page title */
 .dashboard > h2 {
   margin-bottom: 2.5rem;
   font-size: 1.85rem;
@@ -20,9 +19,9 @@
 }
 
 /* ─────────────────────────────────────────
-   SECTION HEADINGS
+   SECTION TITLE  (.section-title)
 ───────────────────────────────────────── */
-.dashboard > h3 {
+.section-title {
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -31,33 +30,42 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #64748b;
+  color: #2563eb;
 }
 
-.dashboard > h3::before {
+.section-title::before {
   content: '';
   display: inline-block;
   width: 4px;
   height: 16px;
   border-radius: 4px;
   flex-shrink: 0;
+  background: linear-gradient(180deg, #3b82f6, #6366f1);
 }
 
-.dashboard > h3::after {
+.section-title::after {
   content: '';
   flex: 1;
   height: 1px;
+  background: linear-gradient(90deg, #bfdbfe, transparent);
 }
 
-/* Task Statistics — blue */
-.dashboard > h3:first-of-type { color: #2563eb; }
-.dashboard > h3:first-of-type::before { background: linear-gradient(180deg, #3b82f6, #6366f1); }
-.dashboard > h3:first-of-type::after  { background: linear-gradient(90deg, #bfdbfe, transparent); }
+/* Second & third section title — purple */
+.stats-grid + .section-title,
+.project-progress-container + .section-title {
+  margin-top: 2.5rem;
+  color: #7c3aed;
+}
 
-/* Project Statistics — purple */
-.dashboard > h3:last-of-type { color: #7c3aed; margin-top: 2.5rem; }
-.dashboard > h3:last-of-type::before { background: linear-gradient(180deg, #8b5cf6, #a78bfa); }
-.dashboard > h3:last-of-type::after  { background: linear-gradient(90deg, #ddd6fe, transparent); }
+.stats-grid + .section-title::before,
+.project-progress-container + .section-title::before {
+  background: linear-gradient(180deg, #8b5cf6, #a78bfa);
+}
+
+.stats-grid + .section-title::after,
+.project-progress-container + .section-title::after {
+  background: linear-gradient(90deg, #ddd6fe, transparent);
+}
 
 /* ─────────────────────────────────────────
    GRID
@@ -69,7 +77,7 @@
 }
 
 /* ─────────────────────────────────────────
-   BASE STAT CARD — LIGHT MODE DEFAULT
+   BASE STAT CARD — LIGHT MODE
 ───────────────────────────────────────── */
 .stat-card {
   background: #ffffff;
@@ -98,10 +106,8 @@
 .stat-card::after {
   content: '';
   position: absolute;
-  top: 18px;
-  right: 18px;
-  width: 42px;
-  height: 42px;
+  top: 18px; right: 18px;
+  width: 42px; height: 42px;
   border-radius: 11px;
   background-size: 55%;
   background-repeat: no-repeat;
@@ -144,69 +150,54 @@
    TASK CARDS — LIGHT MODE
 ───────────────────────────────────────── */
 
-/* Total Tasks */
-.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::before {
+/* Total Tasks — blue */
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::before {
   background: linear-gradient(90deg, #2563eb, #60a5fa);
 }
-.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::after {
   background-color: #eff6ff;
   border: 1px solid #bfdbfe;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2'/%3E%3Crect x='9' y='3' width='6' height='4' rx='1'/%3E%3Cline x1='9' y1='12' x2='15' y2='12'/%3E%3Cline x1='9' y1='16' x2='13' y2='16'/%3E%3C/svg%3E");
 }
-.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #1d4ed8; }
-.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #2563eb; }
-.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) h3 { color: #1d4ed8; }
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) p  { color: #2563eb; }
+.stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active):hover {
   border-color: #bfdbfe;
-  box-shadow: 0 12px 32px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 12px 32px rgba(37,99,235,0.1);
 }
 
-/* Completed Tasks */
-.stats-grid:first-of-type .stat-card.completed::before {
-  background: linear-gradient(90deg, #10b981, #34d399);
-}
-.stats-grid:first-of-type .stat-card.completed::after {
+/* Completed — green */
+.stat-card.completed::before { background: linear-gradient(90deg, #10b981, #34d399); }
+.stat-card.completed::after {
   background-color: #ecfdf5;
   border: 1px solid #a7f3d0;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 11.08V12a10 10 0 11-5.93-9.14'/%3E%3Cpolyline points='22 4 12 14.01 9 11.01'/%3E%3C/svg%3E");
 }
-.stats-grid:first-of-type .stat-card.completed h3 { color: #059669; }
-.stats-grid:first-of-type .stat-card.completed p  { color: #10b981; }
-.stats-grid:first-of-type .stat-card.completed:hover {
-  border-color: #a7f3d0;
-  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.1);
-}
+.stat-card.completed h3 { color: #059669; }
+.stat-card.completed p  { color: #10b981; }
+.stat-card.completed:hover { border-color: #a7f3d0; box-shadow: 0 12px 32px rgba(16,185,129,0.1); }
 
-/* Pending Tasks */
-.stats-grid:first-of-type .stat-card.pending::before {
-  background: linear-gradient(90deg, #f59e0b, #fbbf24);
-}
-.stats-grid:first-of-type .stat-card.pending::after {
+/* Pending — amber */
+.stat-card.pending::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.stat-card.pending::after {
   background-color: #fffbeb;
   border: 1px solid #fde68a;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E");
 }
-.stats-grid:first-of-type .stat-card.pending h3 { color: #d97706; }
-.stats-grid:first-of-type .stat-card.pending p  { color: #f59e0b; }
-.stats-grid:first-of-type .stat-card.pending:hover {
-  border-color: #fde68a;
-  box-shadow: 0 12px 32px rgba(245, 158, 11, 0.1);
-}
+.stat-card.pending h3 { color: #d97706; }
+.stat-card.pending p  { color: #f59e0b; }
+.stat-card.pending:hover { border-color: #fde68a; box-shadow: 0 12px 32px rgba(245,158,11,0.1); }
 
-/* Completion Rate */
-.stats-grid:first-of-type .stat-card.rate::before {
-  background: linear-gradient(90deg, #ef4444, #f87171);
-}
-.stats-grid:first-of-type .stat-card.rate::after {
+/* Rate — rose */
+.stat-card.rate::before { background: linear-gradient(90deg, #ef4444, #f87171); }
+.stat-card.rate::after {
   background-color: #fff1f2;
   border: 1px solid #fecdd3;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='18' y1='20' x2='18' y2='10'/%3E%3Cline x1='12' y1='20' x2='12' y2='4'/%3E%3Cline x1='6' y1='20' x2='6' y2='14'/%3E%3Cline x1='3' y1='20' x2='21' y2='20'/%3E%3C/svg%3E");
 }
-.stats-grid:first-of-type .stat-card.rate h3 { color: #e11d48; }
-.stats-grid:first-of-type .stat-card.rate p  { color: #ef4444; }
-.stats-grid:first-of-type .stat-card.rate:hover {
-  border-color: #fecdd3;
-  box-shadow: 0 12px 32px rgba(239, 68, 68, 0.1);
-}
+.stat-card.rate h3 { color: #e11d48; }
+.stat-card.rate p  { color: #ef4444; }
+.stat-card.rate:hover { border-color: #fecdd3; box-shadow: 0 12px 32px rgba(239,68,68,0.1); }
 
 /* ─────────────────────────────────────────
    PROJECT CARDS — LIGHT MODE
@@ -217,64 +208,52 @@
   border-radius: 14px;
 }
 
-/* Total Projects */
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) {
+/* Total Projects — violet */
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) {
   border-color: #c4b5fd;
 }
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::before {
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::before {
   background: linear-gradient(90deg, #7c3aed, #a78bfa);
 }
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::after {
   background-color: #f5f3ff;
   border: 1px solid #ddd6fe;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237c3aed' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 012-2h4l2 2.5h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z'/%3E%3C/svg%3E");
 }
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #7c3aed; }
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #8b5cf6; }
-.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) h3 { color: #7c3aed; }
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) p  { color: #8b5cf6; }
+.stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active):hover {
   border-color: #8b5cf6;
-  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 12px 32px rgba(124,58,237,0.1);
 }
 
-/* Active Projects */
-.stats-grid:last-of-type .stat-card.completed { border-color: #5eead4; }
-.stats-grid:last-of-type .stat-card.completed::before {
-  background: linear-gradient(90deg, #0d9488, #2dd4bf);
-}
-.stats-grid:last-of-type .stat-card.completed::after {
+/* Active — teal */
+.stats-grid:last-of-type .stat-card.active { border-color: #5eead4; }
+.stats-grid:last-of-type .stat-card.active::before { background: linear-gradient(90deg, #0d9488, #2dd4bf); }
+.stats-grid:last-of-type .stat-card.active::after {
   background-color: #f0fdfa;
   border: 1px solid #99f6e4;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d9488' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E");
 }
-.stats-grid:last-of-type .stat-card.completed h3 { color: #0d9488; }
-.stats-grid:last-of-type .stat-card.completed p  { color: #14b8a6; }
-.stats-grid:last-of-type .stat-card.completed:hover {
-  border-color: #14b8a6;
-  box-shadow: 0 12px 32px rgba(13, 148, 136, 0.1);
-}
+.stats-grid:last-of-type .stat-card.active h3 { color: #0d9488; }
+.stats-grid:last-of-type .stat-card.active p  { color: #14b8a6; }
+.stats-grid:last-of-type .stat-card.active:hover { border-color: #14b8a6; box-shadow: 0 12px 32px rgba(13,148,136,0.1); }
 
-/* Completed Projects */
-.stats-grid:last-of-type .stat-card.rate { border-color: #a5b4fc; }
-.stats-grid:last-of-type .stat-card.rate::before {
-  background: linear-gradient(90deg, #4f46e5, #818cf8);
-}
-.stats-grid:last-of-type .stat-card.rate::after {
+/* Completed Projects — indigo */
+.stats-grid:last-of-type .stat-card.completed { border-color: #a5b4fc; border-style: dashed; }
+.stats-grid:last-of-type .stat-card.completed::before { background: linear-gradient(90deg, #4f46e5, #818cf8); }
+.stats-grid:last-of-type .stat-card.completed::after {
   background-color: #eef2ff;
   border: 1px solid #c7d2fe;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f46e5' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
 }
-.stats-grid:last-of-type .stat-card.rate h3 { color: #4f46e5; }
-.stats-grid:last-of-type .stat-card.rate p  { color: #6366f1; }
-.stats-grid:last-of-type .stat-card.rate:hover {
-  border-color: #6366f1;
-  box-shadow: 0 12px 32px rgba(79, 70, 229, 0.1);
-}
+.stats-grid:last-of-type .stat-card.completed h3 { color: #4f46e5; }
+.stats-grid:last-of-type .stat-card.completed p  { color: #6366f1; }
+.stats-grid:last-of-type .stat-card.completed:hover { border-color: #6366f1; box-shadow: 0 12px 32px rgba(79,70,229,0.1); }
 
-/* On Hold Projects */
-.stats-grid:last-of-type .stat-card.pending { border-color: #fcd34d; }
-.stats-grid:last-of-type .stat-card.pending::before {
-  background: linear-gradient(90deg, #d97706, #fbbf24);
-}
+/* On Hold — amber */
+.stats-grid:last-of-type .stat-card.pending { border-color: #fcd34d; border-style: dashed; }
+.stats-grid:last-of-type .stat-card.pending::before { background: linear-gradient(90deg, #d97706, #fbbf24); }
 .stats-grid:last-of-type .stat-card.pending::after {
   background-color: #fffbeb;
   border: 1px solid #fde68a;
@@ -282,10 +261,193 @@
 }
 .stats-grid:last-of-type .stat-card.pending h3 { color: #d97706; }
 .stats-grid:last-of-type .stat-card.pending p  { color: #f59e0b; }
-.stats-grid:last-of-type .stat-card.pending:hover {
-  border-color: #f59e0b;
-  box-shadow: 0 12px 32px rgba(217, 119, 6, 0.1);
+.stats-grid:last-of-type .stat-card.pending:hover { border-color: #f59e0b; box-shadow: 0 12px 32px rgba(217,119,6,0.1); }
+
+/* ─────────────────────────────────────────
+   PROJECT PROGRESS SECTION
+───────────────────────────────────────── */
+.project-progress-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0;
 }
+
+/* Empty state */
+.project-progress-container > p {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #9ca3af;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 2px dashed #e5e7eb;
+}
+
+/* Individual progress card */
+.project-progress-card {
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left colored accent */
+.project-progress-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, #3b82f6, #6366f1);
+  border-radius: 14px 0 0 14px;
+  transform: scaleY(0);
+  transition: transform 0.25s ease;
+}
+
+.project-progress-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.1);
+  border-color: #c7d2fe;
+}
+
+.project-progress-card:hover::before { transform: scaleY(1); }
+
+/* Header row: project name + percentage */
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.project-header span:first-child {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1f2937;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.project-header span:last-child {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #3b82f6;
+  flex-shrink: 0;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  padding: 2px 10px;
+  border-radius: 20px;
+  letter-spacing: -0.01em;
+}
+
+/* Progress bar track */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+/* Progress bar fill */
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #3b82f6, #6366f1);
+  transition: width 0.6s ease;
+  position: relative;
+}
+
+/* Shimmer on fill */
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* Task count label */
+.project-progress-card small {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-progress-card small::before {
+  content: '';
+  display: inline-block;
+  width: 12px; height: 12px;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d1d5db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* ─────────────────────────────────────────
+   CHART CONTAINER
+───────────────────────────────────────── */
+.chart-container {
+  margin-top: 2.5rem;
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 1.75rem 1.75rem 1.25rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.chart-container h3 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2563eb;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-container h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px; height: 16px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #3b82f6, #6366f1);
+  flex-shrink: 0;
+}
+
+.chart-container h3::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #bfdbfe, transparent);
+}
+
+.chart-container .recharts-cartesian-grid-horizontal line,
+.chart-container .recharts-cartesian-grid-vertical line {
+  stroke: #f1f5f9;
+}
+
+.chart-container .recharts-text { fill: #6b7280; font-size: 0.8rem; }
 
 /* ─────────────────────────────────────────
    DARK MODE  (body.dark)
@@ -295,38 +457,42 @@ body.dark .dashboard > h2 {
   border-bottom-color: #1e293b;
 }
 
-body.dark .dashboard > h3:first-of-type { color: #60a5fa; }
-body.dark .dashboard > h3:first-of-type::before { background: linear-gradient(180deg, #60a5fa, #818cf8); }
-body.dark .dashboard > h3:first-of-type::after  { background: linear-gradient(90deg, rgba(96,165,250,0.2), transparent); }
+body.dark .section-title { color: #60a5fa; }
+body.dark .section-title::before { background: linear-gradient(180deg, #60a5fa, #818cf8); }
+body.dark .section-title::after  { background: linear-gradient(90deg, rgba(96,165,250,0.2), transparent); }
 
-body.dark .dashboard > h3:last-of-type { color: #a78bfa; }
-body.dark .dashboard > h3:last-of-type::before { background: linear-gradient(180deg, #a78bfa, #c4b5fd); }
-body.dark .dashboard > h3:last-of-type::after  { background: linear-gradient(90deg, rgba(167,139,250,0.2), transparent); }
+body.dark .stats-grid + .section-title,
+body.dark .project-progress-container + .section-title {
+  color: #a78bfa;
+}
+body.dark .stats-grid + .section-title::before,
+body.dark .project-progress-container + .section-title::before {
+  background: linear-gradient(180deg, #a78bfa, #c4b5fd);
+}
+body.dark .stats-grid + .section-title::after,
+body.dark .project-progress-container + .section-title::after {
+  background: linear-gradient(90deg, rgba(167,139,250,0.2), transparent);
+}
 
 /* Dark base card */
 body.dark .stat-card {
   background: #131727;
-  border-color: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255,255,255,0.06);
   border-style: solid;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
-body.dark .stats-grid:last-of-type .stat-card {
-  border-style: dashed;
-}
+body.dark .stats-grid:last-of-type .stat-card { border-style: dashed; }
 
 /* Dark — Total Tasks */
-body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::after {
   background-color: rgba(59,130,246,0.12);
   border-color: rgba(59,130,246,0.2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2360a5fa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2'/%3E%3Crect x='9' y='3' width='6' height='4' rx='1'/%3E%3Cline x1='9' y1='12' x2='15' y2='12'/%3E%3Cline x1='9' y1='16' x2='13' y2='16'/%3E%3C/svg%3E");
 }
-body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #60a5fa; }
-body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #3b82f6; }
-body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
-  border-color: rgba(59,130,246,0.3);
-  box-shadow: 0 16px 36px rgba(59,130,246,0.12);
-}
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) h3 { color: #60a5fa; }
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) p  { color: #3b82f6; }
+body.dark .stats-grid:first-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active):hover { border-color: rgba(59,130,246,0.3); box-shadow: 0 16px 36px rgba(59,130,246,0.12); }
 
 /* Dark — Completed Tasks */
 body.dark .stats-grid:first-of-type .stat-card.completed::after {
@@ -336,10 +502,7 @@ body.dark .stats-grid:first-of-type .stat-card.completed::after {
 }
 body.dark .stats-grid:first-of-type .stat-card.completed h3 { color: #34d399; }
 body.dark .stats-grid:first-of-type .stat-card.completed p  { color: #10b981; }
-body.dark .stats-grid:first-of-type .stat-card.completed:hover {
-  border-color: rgba(16,185,129,0.3);
-  box-shadow: 0 16px 36px rgba(16,185,129,0.12);
-}
+body.dark .stats-grid:first-of-type .stat-card.completed:hover { border-color: rgba(16,185,129,0.3); box-shadow: 0 16px 36px rgba(16,185,129,0.12); }
 
 /* Dark — Pending Tasks */
 body.dark .stats-grid:first-of-type .stat-card.pending::after {
@@ -349,12 +512,9 @@ body.dark .stats-grid:first-of-type .stat-card.pending::after {
 }
 body.dark .stats-grid:first-of-type .stat-card.pending h3 { color: #fbbf24; }
 body.dark .stats-grid:first-of-type .stat-card.pending p  { color: #f59e0b; }
-body.dark .stats-grid:first-of-type .stat-card.pending:hover {
-  border-color: rgba(245,158,11,0.3);
-  box-shadow: 0 16px 36px rgba(245,158,11,0.12);
-}
+body.dark .stats-grid:first-of-type .stat-card.pending:hover { border-color: rgba(245,158,11,0.3); box-shadow: 0 16px 36px rgba(245,158,11,0.12); }
 
-/* Dark — Completion Rate */
+/* Dark — Rate */
 body.dark .stats-grid:first-of-type .stat-card.rate::after {
   background-color: rgba(239,68,68,0.12);
   border-color: rgba(239,68,68,0.2);
@@ -362,54 +522,40 @@ body.dark .stats-grid:first-of-type .stat-card.rate::after {
 }
 body.dark .stats-grid:first-of-type .stat-card.rate h3 { color: #f87171; }
 body.dark .stats-grid:first-of-type .stat-card.rate p  { color: #ef4444; }
-body.dark .stats-grid:first-of-type .stat-card.rate:hover {
-  border-color: rgba(239,68,68,0.3);
-  box-shadow: 0 16px 36px rgba(239,68,68,0.12);
-}
+body.dark .stats-grid:first-of-type .stat-card.rate:hover { border-color: rgba(239,68,68,0.3); box-shadow: 0 16px 36px rgba(239,68,68,0.12); }
 
 /* Dark — Total Projects */
-body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) {
-  border-color: rgba(139,92,246,0.35);
-}
-body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate)::after {
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) { border-color: rgba(139,92,246,0.35); }
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active)::after {
   background-color: rgba(139,92,246,0.12);
   border-color: rgba(139,92,246,0.2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a78bfa' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 7a2 2 0 012-2h4l2 2.5h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z'/%3E%3C/svg%3E");
 }
-body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) h3 { color: #a78bfa; }
-body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate) p  { color: #8b5cf6; }
-body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):hover {
-  border-color: rgba(139,92,246,0.5);
-  box-shadow: 0 16px 36px rgba(139,92,246,0.12);
-}
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) h3 { color: #a78bfa; }
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active) p  { color: #8b5cf6; }
+body.dark .stats-grid:last-of-type .stat-card:not(.completed):not(.pending):not(.rate):not(.active):hover { border-color: rgba(139,92,246,0.5); box-shadow: 0 16px 36px rgba(139,92,246,0.12); }
 
-/* Dark — Active Projects */
-body.dark .stats-grid:last-of-type .stat-card.completed { border-color: rgba(20,184,166,0.35); }
-body.dark .stats-grid:last-of-type .stat-card.completed::after {
+/* Dark — Active */
+body.dark .stats-grid:last-of-type .stat-card.active { border-color: rgba(20,184,166,0.35); }
+body.dark .stats-grid:last-of-type .stat-card.active::after {
   background-color: rgba(20,184,166,0.12);
   border-color: rgba(20,184,166,0.2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232dd4bf' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='13 2 3 14 12 14 11 22 21 10 12 10 13 2'/%3E%3C/svg%3E");
 }
-body.dark .stats-grid:last-of-type .stat-card.completed h3 { color: #2dd4bf; }
-body.dark .stats-grid:last-of-type .stat-card.completed p  { color: #14b8a6; }
-body.dark .stats-grid:last-of-type .stat-card.completed:hover {
-  border-color: rgba(20,184,166,0.5);
-  box-shadow: 0 16px 36px rgba(20,184,166,0.12);
-}
+body.dark .stats-grid:last-of-type .stat-card.active h3 { color: #2dd4bf; }
+body.dark .stats-grid:last-of-type .stat-card.active p  { color: #14b8a6; }
+body.dark .stats-grid:last-of-type .stat-card.active:hover { border-color: rgba(20,184,166,0.5); box-shadow: 0 16px 36px rgba(20,184,166,0.12); }
 
 /* Dark — Completed Projects */
-body.dark .stats-grid:last-of-type .stat-card.rate { border-color: rgba(99,102,241,0.35); }
-body.dark .stats-grid:last-of-type .stat-card.rate::after {
+body.dark .stats-grid:last-of-type .stat-card.completed { border-color: rgba(99,102,241,0.35); }
+body.dark .stats-grid:last-of-type .stat-card.completed::after {
   background-color: rgba(99,102,241,0.12);
   border-color: rgba(99,102,241,0.2);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23818cf8' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
 }
-body.dark .stats-grid:last-of-type .stat-card.rate h3 { color: #818cf8; }
-body.dark .stats-grid:last-of-type .stat-card.rate p  { color: #6366f1; }
-body.dark .stats-grid:last-of-type .stat-card.rate:hover {
-  border-color: rgba(99,102,241,0.5);
-  box-shadow: 0 16px 36px rgba(99,102,241,0.12);
-}
+body.dark .stats-grid:last-of-type .stat-card.completed h3 { color: #818cf8; }
+body.dark .stats-grid:last-of-type .stat-card.completed p  { color: #6366f1; }
+body.dark .stats-grid:last-of-type .stat-card.completed:hover { border-color: rgba(99,102,241,0.5); box-shadow: 0 16px 36px rgba(99,102,241,0.12); }
 
 /* Dark — On Hold */
 body.dark .stats-grid:last-of-type .stat-card.pending { border-color: rgba(249,115,22,0.35); }
@@ -420,16 +566,65 @@ body.dark .stats-grid:last-of-type .stat-card.pending::after {
 }
 body.dark .stats-grid:last-of-type .stat-card.pending h3 { color: #fb923c; }
 body.dark .stats-grid:last-of-type .stat-card.pending p  { color: #f97316; }
-body.dark .stats-grid:last-of-type .stat-card.pending:hover {
-  border-color: rgba(249,115,22,0.5);
-  box-shadow: 0 16px 36px rgba(249,115,22,0.12);
+body.dark .stats-grid:last-of-type .stat-card.pending:hover { border-color: rgba(249,115,22,0.5); box-shadow: 0 16px 36px rgba(249,115,22,0.12); }
+
+/* Dark — Progress cards */
+body.dark .project-progress-container > p {
+  background: #131727;
+  border-color: rgba(255,255,255,0.07);
+  color: #475569;
 }
+
+body.dark .project-progress-card {
+  background: #131727;
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+body.dark .project-progress-card:hover {
+  border-color: rgba(99,102,241,0.25);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+}
+
+body.dark .project-header span:first-child { color: #f1f5f9; }
+
+body.dark .project-header span:last-child {
+  color: #818cf8;
+  background: rgba(99,102,241,0.12);
+  border-color: rgba(99,102,241,0.2);
+}
+
+body.dark .progress-bar { background: rgba(255,255,255,0.06); }
+
+body.dark .progress-fill {
+  background: linear-gradient(90deg, #4f46e5, #818cf8);
+}
+
+body.dark .project-progress-card small { color: #475569; }
+
+body.dark .project-progress-card small::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 11l3 3L22 4'/%3E%3Cpath d='M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11'/%3E%3C/svg%3E");
+}
+
+/* Dark — Chart */
+body.dark .chart-container {
+  background: #131727;
+  border-color: rgba(255,255,255,0.06);
+}
+
+body.dark .chart-container h3 { color: #60a5fa; }
+body.dark .chart-container h3::after { background: linear-gradient(90deg, rgba(96,165,250,0.2), transparent); }
+
+body.dark .chart-container .recharts-cartesian-grid-horizontal line,
+body.dark .chart-container .recharts-cartesian-grid-vertical line { stroke: rgba(255,255,255,0.06); }
+body.dark .chart-container .recharts-text { fill: #475569; }
 
 /* ─────────────────────────────────────────
    RESPONSIVE
 ───────────────────────────────────────── */
 @media (max-width: 1024px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .project-progress-container { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
@@ -439,6 +634,8 @@ body.dark .stats-grid:last-of-type .stat-card.pending:hover {
   .stat-card { padding: 18px 18px 14px; }
   .stat-card h3 { font-size: 2.4rem; margin-bottom: 26px; }
   .stat-card::after { width: 36px; height: 36px; top: 14px; right: 14px; }
+  .project-progress-container { grid-template-columns: 1fr; }
+  .chart-container { padding: 1.25rem 1.25rem 1rem; margin-top: 1.75rem; }
 }
 
 @media (max-width: 480px) {

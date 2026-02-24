@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Login.css'
 
-function Login() {
+function Signup() {
   const navigate = useNavigate()
 
   const [email, setEmail] = useState('')
@@ -10,13 +10,13 @@ function Login() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  async function handleLogin(e) {
+  async function handleSignup(e) {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/login', {
+      const res = await fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -25,24 +25,11 @@ function Login() {
       const data = await res.json()
 
       if (!res.ok) {
-        throw new Error(data.message || 'Invalid credentials')
+        throw new Error(data.message || 'Signup failed')
       }
 
-     
-      localStorage.setItem('token', data.token)
-
-    
-      localStorage.setItem(
-        'user',
-        JSON.stringify({
-          _id: data.user._id,
-          email: data.user.email,
-          role: data.user.role
-        })
-      )
-
-      
-      window.location.href = '/dashboard'
+      alert('Account created successfully!')
+      navigate('/')
 
     } catch (err) {
       setError(err.message)
@@ -53,8 +40,8 @@ function Login() {
 
   return (
     <div className="login-container">
-      <form className="login-form" onSubmit={handleLogin}>
-        <h2>Login</h2>
+      <form className="login-form" onSubmit={handleSignup}>
+        <h2>Sign Up</h2>
 
         {error && <p className="error">{error}</p>}
 
@@ -75,22 +62,16 @@ function Login() {
         />
 
         <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
+          {loading ? 'Creating Account...' : 'Sign Up'}
         </button>
 
         <p style={{ marginTop: '15px' }}>
-          Don’t have an account?{' '}
-          <Link to="/signup">Sign Up</Link>
-        </p>
-
-        <p className="demo">
-          Demo:
-          <br />
-          admin@test.com / 123456
+          Already have an account?{' '}
+          <Link to="/">Sign In</Link>
         </p>
       </form>
     </div>
   )
 }
 
-export default Login
+export default Signup

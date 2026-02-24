@@ -1,79 +1,123 @@
-import { useState } from 'react'
-import { useOutletContext } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useOutletContext, useSearchParams } from 'react-router-dom'
 import './Projects.css'
 
 function Projects() {
   const { projects, addProject, deleteProject } = useOutletContext()
+  const [searchParams] = useSearchParams()
 
+  const statusQuery = searchParams.get('status')
+
+  const [statusFilter, setStatusFilter] = useState('all')
+  const [search, setSearch] = useState('')
+  const [showModal, setShowModal] = useState(false)
   const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
   const [status, setStatus] = useState('Active')
 
-  function handleAddProject() {
-    if (!name) return alert('Project name required')
-
-    const newProject = {
-      id: Date.now(),
-      name,
-      description,
-      status
+  useEffect(() => {
+    if (statusQuery) {
+      setStatusFilter(statusQuery)
     }
+  }, [statusQuery])
 
-    addProject(newProject)
-    setName('')
-    setDescription('')
-    setStatus('Active')
+  function getFilteredProjects() {
+    let filtered = projects
+
+    if (statusFilter !== 'all')
+      filtered = filtered.filter(p => p.status === statusFilter)
+
+    if (search.trim() !== '')
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(search.toLowerCase())
+      )
+
+    return filtered
   }
+
+  function handleCreate() {
+    if (!name.trim()) return alert('Project name required')
+    addProject({ name, status })
+    setShowModal(false)
+    setName('')
+  }
+
+  const filteredProjects = getFilteredProjects()
 
   return (
     <div className="projects">
       <h2>Projects</h2>
 
-      <div className="add-project">
-        <input
-          type="text"
-          placeholder="Project name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+      <button onClick={() => setShowModal(true)}>
+        + Add Project
+      </button>
 
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+      <input
+        type="text"
+        placeholder="Search projects..."
+        className="search-input"
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+      />
 
+      <div className="project-filters">
         <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          value={statusFilter}
+          onChange={e => setStatusFilter(e.target.value)}
         >
-          <option>Active</option>
-          <option>Completed</option>
-          <option>On Hold</option>
+          <option value="all">All</option>
+          <option value="Active">Active</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
         </select>
-
-        <button onClick={handleAddProject}>Add</button>
       </div>
 
-      {projects.length === 0 ? (
-        <p>No projects yet.</p>
+      {filteredProjects.length === 0 ? (
+        <p>No projects found.</p>
       ) : (
-        <ul>
-          {projects.map(project => (
-            <li key={project.id}>
+        <ul className="project-list">
+          {filteredProjects.map(project => (
+            <li key={project._id} className="project-card">
               <div>
-                <strong>{project.name}</strong>
-                <p>{project.description}</p>
-                <span className={`status ${project.status}`}>
+                <h4>{project.name}</h4>
+                <span className={`status-badge ${project.status}`}>
                   {project.status}
                 </span>
               </div>
-
-              <button onClick={() => deleteProject(project.id)}>❌</button>
+              <button
+                className="delete-btn"
+                onClick={() => deleteProject(project._id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
+      )}
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Create Project</h3>
+
+            <input
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="Project Name"
+            />
+
+            <select
+              value={status}
+              onChange={e => setStatus(e.target.value)}
+            >
+              <option value="Active">Active</option>
+              <option value="Completed">Completed</option>
+              <option value="On Hold">On Hold</option>
+            </select>
+
+            <button onClick={() => setShowModal(false)}>Cancel</button>
+            <button onClick={handleCreate}>Create</button>
+          </div>
+        </div>
       )}
     </div>
   )
