@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Login.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = "https://project-management-backend-lkt3.onrender.com"
 
 function Signup() {
   const navigate = useNavigate()

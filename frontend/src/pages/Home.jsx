@@ -5,7 +5,7 @@ import TaskModal from '../components/TaskModal'
 import { Outlet } from 'react-router-dom'
 import './Home.css'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+const API_URL = "https://project-management-backend-lkt3.onrender.com"
 
 function Home() {
   const [showModal, setShowModal] = useState(false)
