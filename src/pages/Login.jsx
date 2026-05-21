@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import './Login.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 function Login() {
   const navigate = useNavigate()
 
@@ -16,7 +18,7 @@ function Login() {
     setLoading(true)
 
     try {
-      const res = await fetch('http://localhost:5000/login', {
+      const res = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
@@ -42,7 +44,7 @@ function Login() {
       )
 
       
-      window.location.href = '/dashboard'
+      navigate('/dashboard')
 
     } catch (err) {
       setError(err.message)

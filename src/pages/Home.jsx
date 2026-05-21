@@ -5,6 +5,8 @@ import TaskModal from '../components/TaskModal'
 import { Outlet } from 'react-router-dom'
 import './Home.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+
 function Home() {
   const [showModal, setShowModal] = useState(false)
 
@@ -21,7 +23,7 @@ function Home() {
 
   async function fetchTasks() {
     try {
-      const res = await fetch('http://localhost:5000/tasks')
+      const res = await fetch(`${API_URL}/tasks`)
       const data = await res.json()
       setTasks(data)
     } catch (err) {
@@ -31,7 +33,7 @@ function Home() {
 
   async function fetchProjects() {
     try {
-      const res = await fetch('http://localhost:5000/projects')
+      const res = await fetch(`${API_URL}/projects`)
       const data = await res.json()
       setProjects(data)
     } catch (err) {
@@ -41,7 +43,7 @@ function Home() {
 
   async function fetchMembers() {
     try {
-      const res = await fetch('http://localhost:5000/members')
+      const res = await fetch(`${API_URL}/members`)
       const data = await res.json()
       setMembers(data)
     } catch (err) {
@@ -53,7 +55,7 @@ function Home() {
 
   async function addTask(task) {
     try {
-      const res = await fetch('http://localhost:5000/tasks', {
+      const res = await fetch(`${API_URL}/tasks`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(task)
@@ -70,7 +72,7 @@ function Home() {
     try {
       const task = tasks.find(t => t._id === id)
 
-      await fetch(`http://localhost:5000/tasks/${id}`, {
+      await fetch(`${API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ completed: !task.completed })
@@ -89,7 +91,7 @@ function Home() {
   // ✅ NEW: Generic update function (used for subtasks)
   async function updateTask(id, updatedData) {
     try {
-      await fetch(`http://localhost:5000/tasks/${id}`, {
+      await fetch(`${API_URL}/tasks/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedData)
@@ -109,7 +111,7 @@ function Home() {
 
   async function deleteTask(id) {
     try {
-      await fetch(`http://localhost:5000/tasks/${id}`, {
+      await fetch(`${API_URL}/tasks/${id}`, {
         method: 'DELETE'
       })
 
@@ -123,7 +125,7 @@ function Home() {
 
   async function addProject(project) {
     try {
-      const res = await fetch('http://localhost:5000/projects', {
+      const res = await fetch(`${API_URL}/projects`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(project)
@@ -138,7 +140,7 @@ function Home() {
 
   async function deleteProject(id) {
     try {
-      await fetch(`http://localhost:5000/projects/${id}`, {
+      await fetch(`${API_URL}/projects/${id}`, {
         method: 'DELETE'
       })
 
@@ -152,7 +154,7 @@ function Home() {
 
   async function addMember(member) {
     try {
-      const res = await fetch('http://localhost:5000/members', {
+      const res = await fetch(`${API_URL}/members`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(member)
@@ -167,7 +169,7 @@ function Home() {
 
   async function deleteMember(id) {
     try {
-      await fetch(`http://localhost:5000/members/${id}`, {
+      await fetch(`${API_URL}/members/${id}`, {
         method: 'DELETE'
       })
 
